@@ -31,12 +31,17 @@
     "karma-jasmine": "^1.1.2",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-webpack": "^3.0.5",
-    "webpack": "^4.20.2"
+    "webpack": "^4.20.2",
+    "flow-typed": "^2.5.1",
+    "proposal-decorators-types": "^0.1.0"
   },
   "browserslist": [
     "> 0.2%",
     "last 2 versions",
     "not ie 8",
     "maintained node versions"
-  ]
+  ],
+  "dependencies": {
+    "rxjs": "^6.3.3"
+  }
 }
