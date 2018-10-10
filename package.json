@@ -1,0 +1,42 @@
+{
+  "name": "rxjs-viewmodel",
+  "version": "0.1.0",
+  "description": "Small MVVM library based upon RxJS",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npx karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csf-dev/rxjs-viewmodel.git"
+  },
+  "keywords": [
+    "rxjs",
+    "mvvm",
+    "observable"
+  ],
+  "author": "Craig Fowler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/csf-dev/rxjs-viewmodel/issues"
+  },
+  "homepage": "https://github.com/csf-dev/rxjs-viewmodel#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-flow": "^7.0.0",
+    "flow-bin": "^0.82.0",
+    "jasmine": "^3.2.0",
+    "karma": "^3.0.0",
+    "karma-jasmine": "^1.1.2",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-webpack": "^3.0.5",
+    "webpack": "^4.20.2"
+  },
+  "browserslist": [
+    "> 0.2%",
+    "last 2 versions",
+    "not ie 8",
+    "maintained node versions"
+  ]
+}
