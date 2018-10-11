@@ -53,3 +53,20 @@ describe('The VM property decorator', () => {
         expect(itemCount).toBe(1);
     });
 });
+
+describe('An optional VM property decorator', () => {
+    class MyClass {
+        @vmProperty() myProperty : VmValue<?string>;
+    }
+
+    it('should set up a VM property with an undefined value', () => {
+        const myObj = new MyClass();
+        expect(myObj.myProperty.value).toBe(undefined);
+    });
+
+    it('can still be mutated with a new value', () => {
+        const myObj = new MyClass();
+        myObj.myProperty.value = 'Foo bar baz';
+        expect(myObj.myProperty.value).toBe('Foo bar baz');
+    });
+});
