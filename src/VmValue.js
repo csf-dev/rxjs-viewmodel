@@ -2,21 +2,27 @@
 import { BehaviorSubject } from 'rxjs';
 
 export interface VmValue<T> {
-    subject : rxjs$Subject<T>;
+    +subject : rxjs$Subject<T>;
     value : T;
 }
 
 export class ViewModelValue<T> implements VmValue<T> {
-    _state : T;
-    subject : rxjs$Subject<T>;
-    get value() : T { return this._state; };
+    //Fields
+    #state : T;
+    #subject : rxjs$Subject<T>;
+
+    // Properties
+    get subject() : rxjs$Subject<T> { return this.#subject; };
+    get value() : T { return this.#state; };
     set value(val : T) : void {
-        this._state = val;
+        this.#state = val;
         this.subject.next(val);
     };
+
+    // Constructor
     constructor(initial : T) {
-        this._state = initial;
-        this.subject = new BehaviorSubject(initial);
+        this.#state = initial;
+        this.#subject = new BehaviorSubject(initial);
     }
 }
 
