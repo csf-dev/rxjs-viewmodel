@@ -1,6 +1,6 @@
 //@flow
 import makeVmProperty, { vmProperty } from './VmProperty';
-import { VmValue } from './VmValue';
+import type { VmValue } from './VmValue';
 
 describe('The VM property creator function', () => {
     it('should create a VM property upon an arbitrary object', () => {

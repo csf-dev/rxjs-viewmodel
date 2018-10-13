@@ -1,5 +1,6 @@
 //@flow
-import vmValue, { VmValue } from './VmValue';
+import vmValue from './VmValue';
+import type { VmValue } from './VmValue';
 import type { FieldDescriptor, MethodOutputDescriptor, Key } from 'proposal-decorators-types';
 
 function getPropertyDescriptor<T>(vmValue : VmValue<T>) : PropertyDescriptor<VmValue<T>> {
