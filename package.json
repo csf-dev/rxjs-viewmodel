@@ -42,7 +42,7 @@
     "> 0.2%",
     "last 2 versions",
     "not ie 8",
-    "maintained node versions"
+    "node 10"
   ],
   "dependencies": {
     "rxjs": "^6.3.3"
