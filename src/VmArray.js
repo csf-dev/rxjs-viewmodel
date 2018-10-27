@@ -59,7 +59,7 @@ export class ViewModelArray<T> implements CopyableToFromArray<T>, ProvidesSubjec
         this.#subject.next(this.#state);
         return result;
     }
-    splice(start : number, deleteCount? : number, ...items : Array<T>) :  Array<T> {
+    splice(start : number, deleteCount? : number, ...items : Array<T>) : Array<T> {
         const result = this.#state.splice(start, deleteCount, ...items);
         this.#subject.next(this.#state);
         return result;
