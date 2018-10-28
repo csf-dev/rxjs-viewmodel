@@ -1,6 +1,5 @@
 //@flow
 import type { InitializationOptions, CompleteInitialzationOptions } from './InitializationOptions';
-import getRootElementProvider from './RootElementProvider';
 
 export interface GetsCompleteInitializationOptions {
     getCompleteOptions(options : InitializationOptions) : CompleteInitialzationOptions;
@@ -11,7 +10,7 @@ export class InitializationOptionsCompleter implements GetsCompleteInitializatio
         return {
             viewModel: options.viewModel,
             bindingProvider: options.bindingProvider,
-            element: options.element || getRootElementProvider().getRootElement()
+            element: options.element || window.document.body
         };
     }
 }
