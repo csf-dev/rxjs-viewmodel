@@ -1,15 +1,15 @@
 //@flow
-import { GetsBindings } from "./GetsBindings";
+import { GetsBindingDefinitions } from "./GetsBindingDefinitions";
 
-type MandatoryOptions = {
-    viewModel : {},
-    bindingProvider : GetsBindings
+type MandatoryOptions<TViewModel : {}> = {
+    viewModel : TViewModel,
+    bindingProvider : GetsBindingDefinitions
 }
 
-export type InitializationOptions = MandatoryOptions & {
+export type InitializationOptions<TViewModel> = MandatoryOptions<TViewModel> & {
     element? : HTMLElement,
 };
 
-export type CompleteInitialzationOptions = MandatoryOptions & {
+export type CompleteInitialzationOptions<TViewModel> = MandatoryOptions<TViewModel> & {
     element : HTMLElement,
 };

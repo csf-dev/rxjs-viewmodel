@@ -2,11 +2,11 @@
 import type { InitializationOptions, CompleteInitialzationOptions } from './InitializationOptions';
 
 export interface GetsCompleteInitializationOptions {
-    getCompleteOptions(options : InitializationOptions) : CompleteInitialzationOptions;
+    getCompleteOptions<TViewModel:{}>(options : InitializationOptions<TViewModel>) : CompleteInitialzationOptions<TViewModel>;
 }
 
 export class InitializationOptionsCompleter implements GetsCompleteInitializationOptions {
-    getCompleteOptions(options : InitializationOptions) : CompleteInitialzationOptions {
+    getCompleteOptions<TViewModel:{}>(options : InitializationOptions<TViewModel>) : CompleteInitialzationOptions<TViewModel> {
         return {
             viewModel: options.viewModel,
             bindingProvider: options.bindingProvider,
