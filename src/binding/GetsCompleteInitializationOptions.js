@@ -1,5 +1,7 @@
 //@flow
 import type { InitializationOptions, CompleteInitialzationOptions } from './InitializationOptions';
+import { getContextFactory } from '../context';
+import { getProvider } from './attributeProvider';
 
 export interface GetsCompleteInitializationOptions {
     getCompleteOptions<TViewModel:{}>(options : InitializationOptions<TViewModel>) : CompleteInitialzationOptions<TViewModel>;
@@ -9,8 +11,9 @@ export class InitializationOptionsCompleter implements GetsCompleteInitializatio
     getCompleteOptions<TViewModel:{}>(options : InitializationOptions<TViewModel>) : CompleteInitialzationOptions<TViewModel> {
         return {
             viewModel: options.viewModel,
-            bindingProvider: options.bindingProvider,
-            element: options.element || window.document.body
+            bindingProvider: options.bindingProvider || getProvider(),
+            element: options.element || window.document.body,
+            bindingContextProvider: options.bindingContextProvider || getContextFactory()
         };
     }
 }

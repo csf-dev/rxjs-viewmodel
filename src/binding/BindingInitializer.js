@@ -1,11 +1,11 @@
 //@flow
 import type { InitializationOptions, CompleteInitialzationOptions } from './InitializationOptions';
 import getOptionsCompleter from './GetsCompleteInitializationOptions';
-import { getContextFactory, BindingContext } from '../context';
+import { ParameterError } from '../errors';
 
-function createRootContext<TViewModel:{}>(data : TViewModel) : BindingContext<TViewModel,TViewModel> {
-    const contextFactory = getContextFactory();
-    return contextFactory.createRootContext(data);
+function getCompletedOptions<TViewModel:{}>(options : InitializationOptions<TViewModel>) : CompleteInitialzationOptions<TViewModel> {
+    const optionsCompleter = options.optionsCompleter ||  getOptionsCompleter();
+    return optionsCompleter.getCompleteOptions(options);
 }
 
 export interface InitializesBinding {
@@ -14,8 +14,10 @@ export interface InitializesBinding {
 
 export class BindingInitializer implements InitializesBinding {
     initialize<TViewModel:{}>(options : InitializationOptions<TViewModel>) {
-        const completedOptions : CompleteInitialzationOptions<TViewModel> = getOptionsCompleter().getCompleteOptions(options);
-        const context : BindingContext<TViewModel,TViewModel> = createRootContext(completedOptions.viewModel);
+        if(!options) throw new ParameterError('options', 'The options are mandatory.');
+        const opts = getCompletedOptions(options);
+
+        const context = opts.bindingContextProvider.createRootContext(opts.viewModel);
         throw new Error('Not implemented yet');
     }
 }
