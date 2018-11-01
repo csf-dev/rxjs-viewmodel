@@ -23,13 +23,13 @@ describe('The VM array property decorator', () => {
 
     it('should set up a VM property with the correct initial value upon class instances', () => {
         const myObj = new MyClass();
-        expect(myObj.myProperty.getShallowCopy()).toEqual(['Item one', 'Item two']);
+        expect(myObj.myProperty.getCopy()).toEqual(['Item one', 'Item two']);
     });
 
     it('should set up a VM property which permits mutating upon class instances', () => {
         const myObj = new MyClass();
-        myObj.myProperty.replaceUsingCopyOf(['Different', 'items']);
-        expect(myObj.myProperty.getShallowCopy()).toEqual(['Different', 'items']);
+        myObj.myProperty.updateWith(['Different', 'items']);
+        expect(myObj.myProperty.getCopy()).toEqual(['Different', 'items']);
     });
 
     it('should not expose excess enumerable named properties', () => {

@@ -1,22 +1,22 @@
 //@flow
 import { BehaviorSubject } from 'rxjs';
 import { ProvidesSubject } from './ProvidesSubject';
-import { CopyableToFromArray } from './CopyableToFromArray';
+import { ProvidesMutable } from './ProvidesMutable';
 import { MutableAsArray } from './MutableAsArray';
 
-export type VmArray<T> = CopyableToFromArray<T> & ProvidesSubject<Array<T>> & MutableAsArray<T>;
+export type VmArray<T> = ProvidesMutable<Array<T>> & ProvidesSubject<Array<T>> & MutableAsArray<T>;
 
-export class ViewModelArray<T> implements CopyableToFromArray<T>, ProvidesSubject<Array<T>>, MutableAsArray<T> {
+export class ViewModelArray<T> implements ProvidesMutable<Array<T>>, ProvidesSubject<Array<T>>, MutableAsArray<T> {
     //Fields
     #state : Array<T>;
     #subject : rxjs$Subject<Array<T>>;
 
     // Properties
     get subject() : rxjs$Subject<Array<T>> { return this.#subject; };
-    getShallowCopy() : Array<T> {
+    getCopy() : Array<T> {
         return this.#state.slice();
     }
-    replaceUsingCopyOf(replacement : Array<T>) : void {
+    updateWith(replacement : Array<T>) : void {
         this.#state = replacement.slice();
         this.#subject.next(this.#state);
     }

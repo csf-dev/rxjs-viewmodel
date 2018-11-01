@@ -1,6 +1,7 @@
 //@flow
-import { BindingContext } from '../context';
+import BindingAction from './BindingAction';
 
-export type Binding = {
-    binding : (context : BindingContext<?{},{}>) => void
+export class Binding<TParams : mixed> {
+    action : BindingAction<TParams>;
+    parameters : TParams;
 }
