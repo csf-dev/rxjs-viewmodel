@@ -7,4 +7,4 @@ export interface ProvidesBindingMarkup {
     +placeholder : SubstitutesElement;
     omitTag : bool;
     remove : bool;
-}
+};

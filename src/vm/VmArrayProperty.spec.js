@@ -6,7 +6,7 @@ describe('The VM array property creator function', () => {
     it('should create a VM property upon an arbitrary object', () => {
         const myObj = {};
         makeVmArrayProperty(myObj, 'myProperty', [42]);
-        expect(myObj.myProperty.getShallowCopy()).toEqual([42]);
+        expect(myObj.myProperty.getCopy()).toEqual([42]);
     });
 
     it('should make a created VM property readonly', () => {

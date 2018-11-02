@@ -1,5 +1,5 @@
 //@flow
-import { ProvidesBindingMarkup } from './BindingMarkup';
+import { ProvidesBindingMarkup } from '../rendering';
 import DataContext from './DataContext';
 import { Binding } from './Binding';
 
