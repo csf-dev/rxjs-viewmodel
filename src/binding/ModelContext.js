@@ -1,16 +1,6 @@
 //@flow
 
-export interface ReadsDataContext {
-    getRoot<T>() : T;
-    get<T>(key : string) : ?T;
-    getKeys() : Array<string>;
-}
-
-export interface WritesDataContext {
-    set(key : string, value : mixed) : void;
-}
-
-export default class DataContext implements ReadsDataContext, WritesDataContext {
+export default class ModelContext {
     #root : mixed;
     #valueMap : Map<string,mixed>;
 
@@ -21,8 +11,8 @@ export default class DataContext implements ReadsDataContext, WritesDataContext 
     }
     getKeys() : Array<string> { return Array.from(this.#valueMap.keys()); }
     set(key : string, value : mixed) : void { this.#valueMap.set(key, value); }
-    getChild() : DataContext {
-        const child = new DataContext(this.#root);
+    getChild() : ModelContext {
+        const child = new ModelContext(this.#root);
         this.#valueMap.forEach((val, key, map) => child.set(key, val));
         return child;
     }

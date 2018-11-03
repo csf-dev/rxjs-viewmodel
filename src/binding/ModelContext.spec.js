@@ -1,11 +1,11 @@
 //@flow
-import DataContext from './DataContext';
+import ModelContext from './ModelContext';
 
-describe('The DataContext class', () => {
-    let sut : DataContext;
+describe('The ModelContext class', () => {
+    let sut : ModelContext;
 
     beforeEach(() => {
-        sut = new DataContext({ number: 5, obj: { foo: 'bar' } });
+        sut = new ModelContext({ number: 5, obj: { foo: 'bar' } });
     });
 
     describe('when setting & getting variables', () => {

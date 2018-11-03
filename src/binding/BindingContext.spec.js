@@ -2,15 +2,15 @@
 
 import BindingContext from './BindingContext';
 import { Binding } from './Binding';
-import BindingAction from './BindingAction';
-import DataContext from './DataContext';
-import { ProvidesBindingMarkup } from '../rendering';
+import { BindingActivator } from './BindingActivator';
+import ModelContext from './ModelContext';
+import { ProvidesBindingMarkup } from '../rendering/BindingMarkup';
 
 describe('The BindingContext class', () => {
     describe('the getAllActions function', () => {
         it('should not return the original array', () => {
             const actions = [ getASampleBinding() ];
-            const sut = new BindingContext(getSampleMarkup(), getSampleDataContext(), 'Params', actions);
+            const sut = new BindingContext(getSampleMarkup(), getSampleModelContext(), 'Params', actions);
 
             const result = sut.getAllActions();
 
@@ -19,7 +19,7 @@ describe('The BindingContext class', () => {
 
         it('should not affect the original array if its return is manipulated', () => {
             const actions = [ getASampleBinding() ];
-            const sut = new BindingContext(getSampleMarkup(), getSampleDataContext(), 'Params', actions);
+            const sut = new BindingContext(getSampleMarkup(), getSampleModelContext(), 'Params', actions);
             const result1 = sut.getAllActions();
             result1.push(getASampleBinding('bar'));
 
@@ -29,8 +29,8 @@ describe('The BindingContext class', () => {
         });
     });
 
-    function getSampleDataContext() : DataContext {
-        return new DataContext(1);
+    function getSampleModelContext() : ModelContext {
+        return new ModelContext(1);
     }
 
     function getSampleMarkup() : ProvidesBindingMarkup {
@@ -48,7 +48,7 @@ describe('The BindingContext class', () => {
         };
     }
 
-    function getASampleBinding(name : string = 'foo') {
-        return new Binding(new BindingAction(name, ctx => {}), 123);
+    function getASampleBinding(name : string = 'foo') : Binding<mixed> {
+        return new Binding({ name: name, activate: ctx => {} }, 123);
     }
 });

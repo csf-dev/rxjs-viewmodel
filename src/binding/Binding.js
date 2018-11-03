@@ -1,16 +1,16 @@
 //@flow
-import BindingAction from './BindingAction';
+import { BindingActivator } from './BindingActivator';
 
 export class Binding<TParams : mixed> {
-    #action : BindingAction<TParams>;
+    #activator : BindingActivator<TParams>;
     #parameters : TParams;
 
-    get action() : BindingAction<TParams> { return this.#action; }
+    get activator() : BindingActivator<TParams> { return this.#activator; }
     get parameters() : TParams { return this.#parameters; }
 
-    constructor(action : BindingAction<TParams>,
+    constructor(activator : BindingActivator<TParams>,
                 parameters : TParams) {
-        this.#action = action;
+        this.#activator = activator;
         this.#parameters = parameters;
     }
 }
