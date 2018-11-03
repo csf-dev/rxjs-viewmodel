@@ -29,7 +29,7 @@ export default function getPlaceholder(element : HTMLElement) : SubstitutesEleme
     if(!document) throw new MissingBrowserError('Missing document object');
 
     const tagName = element.tagName;
-    return new ElementPlaceholder(document.createComment(`Placeholder: <{tagName}>`),
-                                  document.createComment(`Placeholder: </{tagName}>`),
-                                  document.createComment(`Placeholder: <{tagName}></{tagName}>`));
+    return new ElementPlaceholder(document.createComment(` Placeholder: Open <${tagName}> `),
+                                  document.createComment(` Placeholder: Close <${tagName}> `),
+                                  document.createComment(` Placeholder: <${tagName}> `));
 }

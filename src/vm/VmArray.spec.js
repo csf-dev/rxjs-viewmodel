@@ -169,7 +169,6 @@ describe('The VmArray type', () => {
         it('should return the same result as the array method of the same name', () => {
             const val = vmArray([1, 2, 3]);
             const result = val.splice(1, 1, 1.5, 1.6);
-            console.log(result);
             expect(result).toEqual([2]);
         });
 

@@ -1,28 +1,28 @@
 //@flow
-import { ProvidesBindingMarkup } from '../rendering/BindingMarkup';
+import { ProvidesBindingDom } from '../rendering/BindingDom';
 import ModelContext from './ModelContext';
 import { Binding } from './Binding';
 
 export default class BindingContext<TParams : mixed> {
-    #markup : ProvidesBindingMarkup;
+    #dom : ProvidesBindingDom;
     #model : ModelContext;
     #parameters : TParams;
-    #allActions : Array<Binding<mixed>>;
+    #allBindings : Array<Binding<mixed>>;
 
-    get markup() { return this.#markup; }
+    get dom() { return this.#dom; }
     get model() { return this.#model; }
     get parameters() { return this.#parameters; }
-    getAllActions() : Array<Binding<mixed>> {
-        return this.#allActions.slice();
+    getAllBindings() : Array<Binding<mixed>> {
+        return this.#allBindings.slice();
     }
 
-    constructor(markup : ProvidesBindingMarkup,
+    constructor(dom : ProvidesBindingDom,
                 model : ModelContext,
                 parameters : TParams,
-                allActions : Array<Binding<mixed>>) {
-        this.#markup = markup;
+                allBindings : Array<Binding<mixed>>) {
+        this.#dom = dom;
         this.#model = model;
         this.#parameters = parameters;
-        this.#allActions = allActions;
+        this.#allBindings = allBindings;
     }
 }

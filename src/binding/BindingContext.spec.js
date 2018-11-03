@@ -4,26 +4,26 @@ import BindingContext from './BindingContext';
 import { Binding } from './Binding';
 import { BindingActivator } from './BindingActivator';
 import ModelContext from './ModelContext';
-import { ProvidesBindingMarkup } from '../rendering/BindingMarkup';
+import { ProvidesBindingDom } from '../rendering/BindingDom';
 
 describe('The BindingContext class', () => {
     describe('the getAllActions function', () => {
         it('should not return the original array', () => {
             const actions = [ getASampleBinding() ];
-            const sut = new BindingContext(getSampleMarkup(), getSampleModelContext(), 'Params', actions);
+            const sut = new BindingContext(getSampleDom(), getSampleModelContext(), 'Params', actions);
 
-            const result = sut.getAllActions();
+            const result = sut.getAllBindings();
 
             expect(result).not.toBe(actions);
         });
 
         it('should not affect the original array if its return is manipulated', () => {
             const actions = [ getASampleBinding() ];
-            const sut = new BindingContext(getSampleMarkup(), getSampleModelContext(), 'Params', actions);
-            const result1 = sut.getAllActions();
+            const sut = new BindingContext(getSampleDom(), getSampleModelContext(), 'Params', actions);
+            const result1 = sut.getAllBindings();
             result1.push(getASampleBinding('bar'));
 
-            const result = sut.getAllActions();
+            const result = sut.getAllBindings();
 
             expect(result.length).toBe(1);
         });
@@ -33,14 +33,14 @@ describe('The BindingContext class', () => {
         return new ModelContext(1);
     }
 
-    function getSampleMarkup() : ProvidesBindingMarkup {
+    function getSampleDom() : ProvidesBindingDom {
         const placeholder = {
             get open() { return document.createComment('Open'); },
             get close() { return document.createComment('Close'); },
             get standin() { return document.createComment('Standin'); },
         };
         return {
-            get isRoot() { return true; },
+            get isBindingRoot() { return true; },
             get element() : HTMLElement { return document.createElement('div'); },
             get placeholder() { return placeholder; },
             omitTag: false,

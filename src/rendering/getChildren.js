@@ -1,9 +1,9 @@
 //@flow
-import { ProvidesBindingMarkup } from './BindingMarkup';
+import { ProvidesBindingDom } from './BindingDom';
 
-export default function getChildren(markup : ProvidesBindingMarkup) : Array<Node> {
+export default function getChildren(markup : ProvidesBindingDom) : Array<Node> {
     if(markup.remove) return [];
-    if(!markup.omitTag) return Array.from(markup.element.children);
+    if(!markup.omitTag) return Array.from(markup.element.childNodes);
 
     const children : Array<Node> = [];
     let currentChild = markup.placeholder.open.nextSibling;

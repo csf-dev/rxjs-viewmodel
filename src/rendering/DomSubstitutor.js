@@ -1,14 +1,14 @@
 //@flow
-import { ProvidesBindingMarkup } from './BindingMarkup';
+import { ProvidesBindingDom } from './BindingDom';
 import { ElementError } from '../errors';
 import getChildren from './getChildren';
 import { tagName as placeholderTagName } from './ElementPlaceholder';
 
 export interface ReplacesElementWithSubstitute {
-    replaceTagsWithSubstitute(markup : ProvidesBindingMarkup) : void;
-    restoreTags(markup : ProvidesBindingMarkup) : void;
-    replaceElementWithSubstitute(markup : ProvidesBindingMarkup) : void;
-    restoreElement(markup : ProvidesBindingMarkup) : void;
+    replaceTagsWithSubstitute(dom : ProvidesBindingDom) : void;
+    restoreTags(dom : ProvidesBindingDom) : void;
+    replaceElementWithSubstitute(dom : ProvidesBindingDom) : void;
+    restoreElement(dom : ProvidesBindingDom) : void;
 }
 
 function getParent(node : Node, name : string) : Element {
@@ -17,54 +17,54 @@ function getParent(node : Node, name : string) : Element {
     return node.parentElement;
 }
 
-function replaceTagsWithSubstitute(markup : ProvidesBindingMarkup) : void {
-    if(markup.omitTag) return;
+function replaceTagsWithSubstitute(dom : ProvidesBindingDom) : void {
+    if(dom.omitTag) return;
 
-    const children = Array.from(markup.element.children);
-    const parent = getParent(markup.element, markup.element.tagName);
+    const children = getChildren(dom);
+    const parent = getParent(dom.element, dom.element.tagName);
 
-    parent.insertBefore(markup.placeholder.open, markup.element);
+    parent.insertBefore(dom.placeholder.open, dom.element);
     children.forEach(item => {
-        markup.element.removeChild(item);
-        parent.insertBefore(item, markup.element);
+        dom.element.removeChild(item);
+        parent.insertBefore(item, dom.element);
     });
-    parent.insertBefore(markup.placeholder.close, markup.element);
+    parent.insertBefore(dom.placeholder.close, dom.element);
 
-    markup.element.remove();
+    dom.element.remove();
 }
 
-function restoreTags(markup : ProvidesBindingMarkup) : void {
-    if(!markup.omitTag || markup.remove) return;
+function restoreTags(dom : ProvidesBindingDom) : void {
+    if(!dom.omitTag || dom.remove) return;
     
-    const children = getChildren(markup);
-    const parent = getParent(markup.placeholder.open, placeholderTagName);
+    const children = getChildren(dom);
+    const parent = getParent(dom.placeholder.open, placeholderTagName);
 
-    parent.insertBefore(markup.element, markup.placeholder.open);
+    parent.insertBefore(dom.element, dom.placeholder.open);
     children.forEach(item => {
         parent.removeChild(item);
-        markup.element.appendChild(item);
+        dom.element.appendChild(item);
     });
 
-    parent.removeChild(markup.placeholder.open);
-    parent.removeChild(markup.placeholder.close);
+    parent.removeChild(dom.placeholder.open);
+    parent.removeChild(dom.placeholder.close);
 }
 
-function replaceElementWithSubstitute(markup : ProvidesBindingMarkup) : void {
-    if(markup.remove) return;
+function replaceElementWithSubstitute(dom : ProvidesBindingDom) : void {
+    if(dom.remove) return;
 
-    const parent = getParent(markup.element, markup.element.tagName);
+    const parent = getParent(dom.element, dom.element.tagName);
 
-    parent.insertBefore(markup.placeholder.standin, markup.element);
-    markup.element.remove();
+    parent.insertBefore(dom.placeholder.standin, dom.element);
+    dom.element.remove();
 }
 
-function restoreElement(markup : ProvidesBindingMarkup) : void {
-    if(!markup.remove || markup.omitTag) return;
+function restoreElement(dom : ProvidesBindingDom) : void {
+    if(!dom.remove || dom.omitTag) return;
 
-    const parent = getParent(markup.placeholder.standin, placeholderTagName);
+    const parent = getParent(dom.placeholder.standin, placeholderTagName);
 
-    parent.insertBefore(markup.element, markup.placeholder.standin);
-    parent.removeChild(markup.placeholder.standin);
+    parent.insertBefore(dom.element, dom.placeholder.standin);
+    parent.removeChild(dom.placeholder.standin);
 }
 
 export class DomSubstitutor implements ReplacesElementWithSubstitute {

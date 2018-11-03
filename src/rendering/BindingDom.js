@@ -3,16 +3,16 @@ import { SubstitutesElement } from './ElementPlaceholder';
 import getPlaceholder from './ElementPlaceholder';
 import getSubstitutor, { ReplacesElementWithSubstitute } from './DomSubstitutor';
 
-export interface ProvidesBindingMarkup {
-    +isRoot : bool;
+export interface ProvidesBindingDom {
+    +isBindingRoot : bool;
     +element : HTMLElement;
     +placeholder : SubstitutesElement;
     omitTag : bool;
     remove : bool;
 };
 
-export class BindingMarkup implements ProvidesBindingMarkup {
-    #isRoot : bool;
+export class BindingDom implements ProvidesBindingDom {
+    #isBindingRoot : bool;
     #element : HTMLElement;
     #placeholder : SubstitutesElement;
     #substitutor : ReplacesElementWithSubstitute;
@@ -20,7 +20,7 @@ export class BindingMarkup implements ProvidesBindingMarkup {
     #omitted : bool;
     #removed : bool;
 
-    get isRoot() : bool { return this.#isRoot; }
+    get isBindingRoot() : bool { return this.#isBindingRoot; }
     get element() : HTMLElement { return this.#element; }
     get placeholder() : SubstitutesElement { return this.#placeholder; }
     get omitTag() : bool { return this.#omitted; }
@@ -49,11 +49,11 @@ export class BindingMarkup implements ProvidesBindingMarkup {
     }
 
     constructor(element : HTMLElement,
-                isRoot : bool,
+                isBindingRoot : bool,
                 placeholder : SubstitutesElement,
                 substitutor : ReplacesElementWithSubstitute) {
         this.#element = element;
-        this.#isRoot = isRoot;
+        this.#isBindingRoot = isBindingRoot;
         this.#placeholder = placeholder;
         this.#substitutor = substitutor;
 
@@ -62,9 +62,9 @@ export class BindingMarkup implements ProvidesBindingMarkup {
     }
 }
 
-export default function getMarkup(element : HTMLElement,
-                                  isRoot : bool = false) : ProvidesBindingMarkup {
+export default function getDom(element : HTMLElement,
+                               isBindingRoot : bool = false) : ProvidesBindingDom {
     const placeholder = getPlaceholder(element);
     const substitutor = getSubstitutor();
-    return new BindingMarkup(element, isRoot, placeholder, substitutor);
+    return new BindingDom(element, isBindingRoot, placeholder, substitutor);
 }
