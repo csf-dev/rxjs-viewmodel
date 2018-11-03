@@ -36,9 +36,9 @@ export class BindingDom implements ProvidesBindingDom {
         this.#omitted = val;
     }
     get remove() : bool { return this.#removed; }
-    set remove(val : bool) { 
+    set remove(val : bool) {
         if(val === this.#removed) return;
-        
+
         if(val && this.omitTag) this.omitTag = false;
 
         if(val) this.#substitutor.replaceElementWithSubstitute(this);

@@ -195,8 +195,9 @@ function getDocumentBody() : HTMLBodyElement {
 
 function getElement(markup : string, container : HTMLElement) : HTMLElement {
     container.innerHTML = markup;
-    const output = Array.from(container.children).find(item => item instanceof HTMLElement);
+    const output = Array.from(container.childNodes).find(item => item instanceof HTMLElement);
     if(!output) throw new Error('You must provide markup which contains at least one HTML element');
+    if(!(output instanceof HTMLElement)) throw new Error('Error in test logic');
     return output;
 }
 

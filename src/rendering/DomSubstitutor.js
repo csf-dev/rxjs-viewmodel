@@ -59,7 +59,7 @@ function replaceElementWithSubstitute(dom : ProvidesBindingDom) : void {
 }
 
 function restoreElement(dom : ProvidesBindingDom) : void {
-    if(!dom.remove || dom.omitTag) return;
+    if(!dom.remove) return;
 
     const parent = getParent(dom.placeholder.standin, placeholderTagName);
 
