@@ -49,6 +49,6 @@ describe('The BindingContext class', () => {
     }
 
     function getASampleBinding(name : string = 'foo') : Binding<mixed> {
-        return new Binding({ name: name, activate: ctx => {} }, 123);
+        return new Binding({ name: name, activate: ctx => {} }, (ctx) => 123);
     }
 });

@@ -1,16 +1,25 @@
 //@flow
 import { BindingActivator } from './BindingActivator';
+import ModelContext from './ModelContext';
 
 export class Binding<TParams : mixed> {
     #activator : BindingActivator<TParams>;
-    #parameters : TParams;
+    #paramsProvider : (ctx : ModelContext) => TParams;
 
     get activator() : BindingActivator<TParams> { return this.#activator; }
-    get parameters() : TParams { return this.#parameters; }
+    
+    getParameters(ctx : ModelContext) : TParams {
+        // Seems like a bug in FlowJS.  It complains if
+        // I try to execute it like:
+        // 
+        //     return this.#paramsProvider(ctx);
+        const provider = this.#paramsProvider;
+        return provider(ctx);
+    }
 
     constructor(activator : BindingActivator<TParams>,
-                parameters : TParams) {
+                paramsProvider : (ctx : ModelContext) => TParams) {
         this.#activator = activator;
-        this.#parameters = parameters;
+        this.#paramsProvider = paramsProvider;
     }
 }

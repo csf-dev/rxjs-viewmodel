@@ -16,6 +16,11 @@ export default class ModelContext {
         this.#valueMap.forEach((val, key, map) => child.set(key, val));
         return child;
     }
+    getAll() : {} {
+        const output = {};
+        this.#valueMap.forEach((val, key) => output[key] = val);
+        return output;
+    }
 
     constructor(root : mixed) {
         this.#root = root;
