@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="47cm" height="27cm" viewBox="-461 19 930 540" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="200" y="20" width="256.4" height="26"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="200" y="20" width="256.4" height="26"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="328.2" y="30">&lt;&lt;Function&gt;&gt;</text>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="328.2" y="39.5">applyBindings</text>
+    <rect style="fill: #ffffff" x="200" y="46" width="256.4" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="200" y="46" width="256.4" height="20"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="203" y="54">+applyBindings(element:HTMLElement,viewModel:mixed,</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="203" y="62">               options?:BindingOptions): Promise&lt;ActiveBindings&gt;</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="160" y="140" width="252.55" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="160" y="140" width="252.55" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="286.275" y="151.5">BindingsInitializer</text>
+    <rect style="fill: #ffffff" x="160" y="158" width="252.55" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="160" y="158" width="252.55" height="20"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="163" y="166">+initialize(viewModel:mixed): Promise&lt;ActiveBindings&gt;</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="163" y="174">+constructor(element:HTMLElement,options:?BindingOptions): void</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="163" y1="174.8" x2="405.55" y2="174.8"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="328.2,67.0059 328.2,98.998 286.275,98.998 286.275,132.285 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="281.275,119.638 286.275,135.638 291.275,119.638 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="307.238" y="95.998"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-300" y="20" width="160.15" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-300" y="20" width="160.15" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-219.925" y="31.5">DomWalkingElementIterator</text>
+    <rect style="fill: #ffffff" x="-300" y="38" width="160.15" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-300" y="38" width="160.15" height="20"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-297" y="46">-root: HTMLElement</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-297" y="54">-current: HTMLElement</text>
+    <rect style="fill: #ffffff" x="-300" y="58" width="160.15" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-300" y="58" width="160.15" height="20"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-297" y="66">+getNext(): HTMLElement</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-297" y="74">+constructor(element:HTMLElement): void</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="-297" y1="74.8" x2="-146.85" y2="74.8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-300" y="260" width="206.35" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-300" y="260" width="206.35" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-196.825" y="271.5">SingleElementBindingsProvider</text>
+    <rect style="fill: #ffffff" x="-300" y="278" width="206.35" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-300" y="278" width="206.35" height="20"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-297" y="286">+getBindings(element:HTMLElement): Map&lt;HTMLElement,</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-297" y="294">             Array&lt;Binding&gt;&gt;</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="40" y="500" width="194.8" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="40" y="500" width="194.8" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="137.4" y="511.5">BindingDomProvider</text>
+    <rect style="fill: #ffffff" x="40" y="518" width="194.8" height="12"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="40" y="518" width="194.8" height="12"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="43" y="526">+getDom(element:HTMLElement): ProvidesBindingDom</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-460" y="400" width="179.4" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-460" y="400" width="179.4" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-370.3" y="411.5">BindingActivatorProvider</text>
+    <rect style="fill: #ffffff" x="-460" y="418" width="179.4" height="12"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-460" y="418" width="179.4" height="12"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-457" y="426">+getActivator(name:string): BindingActivator</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-360" y="460" width="333.4" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-360" y="460" width="333.4" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-193.3" y="471.5">ParametersProviderFactory</text>
+    <rect style="fill: #ffffff" x="-360" y="478" width="333.4" height="12"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-360" y="478" width="333.4" height="12"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-357" y="486">+getProvider&lt;T&gt;(element:HTMLElement,activatorName:string): (ctx : ModelContext) =&gt; T</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-260" y="140" width="206.35" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-260" y="140" width="206.35" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-156.825" y="151.5">RecursiveBindingsProvider</text>
+    <rect style="fill: #ffffff" x="-260" y="158" width="206.35" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-260" y="158" width="206.35" height="20"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-257" y="166">+getBindings(element:HTMLElement): Map&lt;HTMLElement,</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-257" y="174">             Array&lt;Binding&gt;&gt;</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="280" y="500" width="187.1" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="280" y="500" width="187.1" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="373.55" y="511.5">ModelContextProvider</text>
+    <rect style="fill: #ffffff" x="280" y="518" width="187.1" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="280" y="518" width="187.1" height="20"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="283" y="526">-contexts: Map&lt;HTMLElement,ModelContext&gt;</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="283" y="534">-viewModel: mixed</text>
+    <rect style="fill: #ffffff" x="280" y="538" width="187.1" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="280" y="538" width="187.1" height="20"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="283" y="546">+getContext(element:HTMLElement): ModelContext</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="283" y="554">+constructor(viewModel:mixed): void</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="283" y1="554.8" x2="417.75" y2="554.8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="180" y="340" width="229.45" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="180" y="340" width="229.45" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="294.725" y="351.5">BindingContextFactory</text>
+    <rect style="fill: #ffffff" x="180" y="358" width="229.45" height="12"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="180" y="358" width="229.45" height="12"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="183" y="366">-modelCtxProvider: ModelContextProvider</text>
+    <rect style="fill: #ffffff" x="180" y="370" width="229.45" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="180" y="370" width="229.45" height="28"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="183" y="378">+getContext(element:HTMLElement,binding:Binding,</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="183" y="386">            allBindings:Array&lt;Binding&gt;): BindingContext</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="183" y="394">+constructor(modelCtxProvider:ModelContextProvider): void</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="183" y1="394.8" x2="402.45" y2="394.8"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="20" y="240" width="244.85" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="20" y="240" width="244.85" height="18"/>
+    <text font-size="8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="142.425" y="251.5">BulkBindingActivator</text>
+    <rect style="fill: #ffffff" x="20" y="258" width="244.85" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="20" y="258" width="244.85" height="20"/>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="23" y="266">+activateAll(contextualBindings:Array&lt;Tuple&lt;Binding,</text>
+    <text font-size="6.4" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="23" y="274">             BindingContext&gt;&gt;): Array&lt;Promise&lt;ActiveBinding&gt;&gt;</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="286.275,204.176 286.275,260 294.725,260 294.725,339.089 "/>
+    <polygon style="fill: #ffffff" points="286.275,179.004 291.075,193.004 286.275,207.004 281.475,193.004 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="286.275,179.004 291.075,193.004 286.275,207.004 281.475,193.004 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="290.5" y="257"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="297.275" y="191.004"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="298.725" y="335.089"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="294.725,424.179 294.725,456 373.55,456 373.55,498.993 "/>
+    <polygon style="fill: #ffffff" points="294.725,399.007 299.525,413.007 294.725,427.007 289.925,413.007 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="294.725,399.007 299.525,413.007 294.725,427.007 289.925,413.007 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="334.137" y="453"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="305.725" y="411.007"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="377.55" y="494.993"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="294.725,424.179 294.725,456 137.4,456 137.4,498.992 "/>
+    <polygon style="fill: #ffffff" points="294.725,399.007 299.525,413.007 294.725,427.007 289.925,413.007 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="294.725,399.007 299.525,413.007 294.725,427.007 289.925,413.007 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="216.062" y="453"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="305.725" y="411.007"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="141.4" y="494.992"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="133.821,159 143.992,159 -51.6436,159 -52.6436,159 "/>
+    <polygon style="fill: #ffffff" points="158.992,159 144.992,163.8 130.992,159 144.992,154.2 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="158.992,159 144.992,163.8 130.992,159 144.992,154.2 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="46.1743" y="156"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="126.992" y="156"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-48.6436" y="156"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-156.825,113.819 -156.825,101.999 -219.925,101.999 -219.925,79.0073 "/>
+    <polygon style="fill: #ffffff" points="-156.825,138.99 -161.625,124.99 -156.825,110.99 -152.025,124.99 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-156.825,138.99 -161.625,124.99 -156.825,110.99 -152.025,124.99 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-188.375" y="98.9988"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-145.825" y="134.99"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-215.925" y="91.0073"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-156.825,204.181 -156.825,226 -196.825,226 -196.825,258.99 "/>
+    <polygon style="fill: #ffffff" points="-156.825,179.01 -152.025,193.01 -156.825,207.01 -161.625,193.01 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-156.825,179.01 -152.025,193.01 -156.825,207.01 -161.625,193.01 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-176.825" y="223"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-145.825" y="191.01"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-192.825" y="254.99"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-196.825,324.181 -196.825,356.001 -370.3,356.001 -370.3,398.992 "/>
+    <polygon style="fill: #ffffff" points="-196.825,299.01 -192.025,313.01 -196.825,327.01 -201.625,313.01 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-196.825,299.01 -192.025,313.01 -196.825,327.01 -201.625,313.01 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-283.562" y="353.001"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-185.825" y="311.01"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-366.3" y="394.992"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-196.825,324.181 -196.825,386.001 -193.3,386.001 -193.3,458.992 "/>
+    <polygon style="fill: #ffffff" points="-196.825,299.01 -192.025,313.01 -196.825,327.01 -201.625,313.01 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-196.825,299.01 -192.025,313.01 -196.825,327.01 -201.625,313.01 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-195.062" y="383.001"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-185.825" y="311.01"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-189.3" y="454.992"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="340,180 340,260 440,260 440,493.295 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="435,480.647 440,496.647 445,480.647 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="390" y="257">Instantiates</text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="286.275,204.181 286.275,216 142.425,216 142.425,238.99 "/>
+    <polygon style="fill: #ffffff" points="286.275,179.01 291.075,193.01 286.275,207.01 281.475,193.01 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="286.275,179.01 291.075,193.01 286.275,207.01 281.475,193.01 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="214.35" y="213"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="297.275" y="191.01"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="146.425" y="234.99"/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="60" cy="44" rx="6" ry="6"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="60" cy="44" rx="6" ry="6"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="36" y1="56" x2="84" y2="56"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="60" y1="50" x2="60" y2="80"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="60" y1="80" x2="36" y2="106"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="60" y1="80" x2="84" y2="106"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="60" y="129.9">
+      <tspan x="60" y="129.9">Client code</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="96.0059,80 120,80 120,43 192.336,43 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="179.688,48 195.688,43 179.688,38 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="122" y="58.5">Calls</text>
+  </g>
+</svg>
