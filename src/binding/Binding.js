@@ -9,9 +9,7 @@ export default class Binding<TParams : mixed> {
     get activator() : BindingActivator<TParams> { return this.#activator; }
     
     getParameters(ctx : ModelContext) : TParams {
-        // Seems like a bug in FlowJS.  It complains if
-        // I try to execute it like:
-        // 
+        // Seems like there's a bug in FlowJS.  It complains if I try to execute it like:
         //     return this.#paramsProvider(ctx);
         const provider = this.#paramsProvider;
         return provider(ctx);
