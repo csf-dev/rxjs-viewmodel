@@ -2,11 +2,13 @@
 import { GetsBindings } from '../GetsBindings';
 import { GetsBindingContext, GetsContextualBindings } from '../GetsBindingContext';
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
+import { GetsBindingActivator } from '../GetsBindingActivator';
 
 export const bindingsProvder = 'bindingsProvider';
 export const bindingContextProvider = 'bindingContextProvider';
 export const contextualBindingsProvider = 'contextualBindingsProvider';
 export const bulkBindingActivator = 'bulkBindingActivator';
+export const bindingActivatorProvider = 'bindingActivatorProvider';
 
 export default class BindingOptions {
     #options : Map<string,mixed>;
@@ -26,6 +28,11 @@ export default class BindingOptions {
     get contextualBindingsProvider() : ?GetsContextualBindings {
         const output : any = this.#options.get(contextualBindingsProvider);
         return (output : GetsContextualBindings) || null;
+    }
+
+    get bindingActivatorProvider() : ?GetsBindingActivator {
+        const output : any = this.#options.get(bindingActivatorProvider);
+        return (output : GetsBindingActivator) || null;
     }
 
     get(key : string) : mixed { return this.#options.get(key); }
