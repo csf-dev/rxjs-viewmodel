@@ -1,6 +1,6 @@
 //@flow
-import ActivatedBinding from './ActivatedBinding';
-import type { ContextualBinding } from './ContextualBinding';
+import { ActivatedBinding } from '../binding';
+import type { ContextualBinding } from '../binding';
 
 export interface ActivatesManyBindings {
     activateAll(contextualBindings : Array<ContextualBinding<mixed>>) : Array<Promise<ActivatedBinding<mixed>>>;

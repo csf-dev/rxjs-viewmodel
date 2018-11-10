@@ -11,8 +11,8 @@ export type ActivationPhase = $Keys<typeof activationPhase>;
 
 export interface BindingActivator<TParams : mixed> {
     name : string;
-    activate : (ctx : BindingContext<TParams>) => void;
-    deactivate? : (ctx : BindingContext<TParams>) => void;
+    activate : (ctx : BindingContext<TParams>) => ?Promise<void>;
+    deactivate? : (ctx : BindingContext<TParams>) => ?Promise<void>;
     activateAfter? : Array<string>;
     activationPhase? : ActivationPhase;
 };

@@ -1,8 +1,11 @@
 //@flow
-import { GetsBindings, GetsBindingContext, ActivatesManyBindings } from '../binding';
+import { GetsBindings } from '../GetsBindings';
+import { GetsBindingContext, GetsContextualBindings } from '../GetsBindingContext';
+import { ActivatesManyBindings } from '../ActivatesManyBindings';
 
 export const bindingsProvder = 'bindingsProvider';
 export const bindingContextProvider = 'bindingContextProvider';
+export const contextualBindingsProvider = 'contextualBindingsProvider';
 export const bulkBindingActivator = 'bulkBindingActivator';
 
 export default class BindingOptions {
@@ -19,6 +22,10 @@ export default class BindingOptions {
     get bulkBindingActivator() : ?ActivatesManyBindings  {
         const output : any = this.#options.get(bulkBindingActivator);
         return (output : ActivatesManyBindings) || null;
+    }
+    get contextualBindingsProvider() : ?GetsContextualBindings {
+        const output : any = this.#options.get(contextualBindingsProvider);
+        return (output : GetsContextualBindings) || null;
     }
 
     get(key : string) : mixed { return this.#options.get(key); }

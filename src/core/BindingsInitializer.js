@@ -1,37 +1,20 @@
 //@flow
 import BindingOptions from './BindingOptions';
-import { ActivatedBinding,
-         ActivatedBindings,
-         Binding,
-         GetsBindings,
-         GetsBindingContext,
-         ActivatesManyBindings } from '../binding';
+import { GetsBindings } from '../GetsBindings';
+import { GetsBindingContext, GetsContextualBindings } from '../GetsBindingContext';
+import { ActivatesManyBindings } from '../ActivatesManyBindings';
+import { ActivatedBinding, ActivatedBindings, Binding } from '../binding';
 import type { ContextualBinding } from '../binding';
 
 function getDefaultBindingsProvider() : GetsBindings {
     throw new Error('Not implemented yet');
 }
 
-function getDefaultBindingContextProvider() : GetsBindingContext {
+function getDefaultContextualBindingsProvider() : GetsContextualBindings {
     throw new Error('Not implemented yet');
 }
 function getDefaultBulkBindingActivator() : ActivatesManyBindings {
     throw new Error('Not implemented yet');
-}
-
-function getContextualBindings(bindings : Map<HTMLElement,Array<Binding<mixed>>>,
-                               bindingContextProvider : GetsBindingContext) : Array<ContextualBinding<mixed>> {
-    const output : Array<ContextualBinding<mixed>> = [];
-
-    bindings.forEach((elementBindings, element) => {
-        elementBindings.forEach(binding => {
-            const context = bindingContextProvider.getContext(element, binding, elementBindings);
-            output.push({ binding: binding, context: context });
-        });
-        
-    });
-
-    return output;
 }
 
 function activateAll(contextualBindings : Array<ContextualBinding<mixed>>,
@@ -48,11 +31,11 @@ export default class BindingsInitializer {
         const opts = this.#options;
 
         const bindingsProvider = opts.bindingsProvider || getDefaultBindingsProvider();
-        const bindingContextProvider = opts.bindingContextProvider || getDefaultBindingContextProvider();
+        const contextualBindingsProvider = opts.contextualBindingsProvider || getDefaultContextualBindingsProvider();
         const bulkBindingActivator = opts.bulkBindingActivator || getDefaultBulkBindingActivator();
 
         const bindings = await bindingsProvider.getBindings(this.#element);
-        const contextualBindings = getContextualBindings(bindings, bindingContextProvider);
+        const contextualBindings = contextualBindingsProvider.getContextualBindings(bindings);
         const activationsCompleted = await activateAll(contextualBindings, bulkBindingActivator);
 
         return new ActivatedBindings(activationsCompleted);
