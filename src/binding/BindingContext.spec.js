@@ -1,7 +1,7 @@
 //@flow
 
 import BindingContext from './BindingContext';
-import { Binding } from './Binding';
+import Binding from './Binding';
 import { BindingActivator } from './BindingActivator';
 import ModelContext from './ModelContext';
 import { ProvidesBindingDom } from '../rendering/BindingDom';

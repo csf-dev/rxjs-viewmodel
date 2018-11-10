@@ -1,10 +1,12 @@
 //@flow
 import BindingOptions from './BindingOptions';
-import { ActivatedBinding, ActivatedBindings, Binding } from '../binding';
-import { GetsBindings } from './GetsBindings';
-import { GetsBindingContext } from './GetsBindingContext';
-import { ActivatesManyBindings } from './ActivatesManyBindings';
-import type { ContextualBinding } from './ContextualBinding';
+import { ActivatedBinding,
+         ActivatedBindings,
+         Binding,
+         GetsBindings,
+         GetsBindingContext,
+         ActivatesManyBindings } from '../binding';
+import type { ContextualBinding } from '../binding';
 
 function getDefaultBindingsProvider() : GetsBindings {
     throw new Error('Not implemented yet');

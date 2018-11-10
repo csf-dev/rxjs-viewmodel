@@ -1,7 +1,5 @@
 //@flow
-import { GetsBindings } from './GetsBindings';
-import { GetsBindingContext } from './GetsBindingContext';
-import { ActivatesManyBindings } from './ActivatesManyBindings';
+import { GetsBindings, GetsBindingContext, ActivatesManyBindings } from '../binding';
 
 export const bindingsProvder = 'bindingsProvider';
 export const bindingContextProvider = 'bindingContextProvider';

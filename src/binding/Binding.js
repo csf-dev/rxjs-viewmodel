@@ -2,7 +2,7 @@
 import { BindingActivator } from './BindingActivator';
 import ModelContext from './ModelContext';
 
-export class Binding<TParams : mixed> {
+export default class Binding<TParams : mixed> {
     #activator : BindingActivator<TParams>;
     #paramsProvider : (ctx : ModelContext) => TParams;
 

@@ -1,5 +1,6 @@
 //@flow
-import { Binding, BindingContext } from '../binding';
+import Binding from './Binding';
+import BindingContext from './BindingContext';
 
 export interface GetsBindingContext {
     getContext(element : HTMLElement,

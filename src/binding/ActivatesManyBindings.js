@@ -1,5 +1,5 @@
 //@flow
-import { ActivatedBinding } from '../binding';
+import ActivatedBinding from './ActivatedBinding';
 import type { ContextualBinding } from './ContextualBinding';
 
 export interface ActivatesManyBindings {
