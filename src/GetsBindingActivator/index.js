@@ -1,8 +1,12 @@
 //@flow
-import { BindingActivator } from '../binding';
+import registry, { RegistersBindingActivators, GetsBindingActivator } from './ActivatorRegistry';
 
-export interface GetsBindingActivator {
-    getActivator(name : string) : BindingActivator<mixed>;
-}
+const activators : RegistersBindingActivators = registry;
 
 export type { ActivatorIdentifier } from './ActivatorIdentifier';
+export { GetsBindingActivator,
+         RegistersBindingActivators,
+         ActivatorRegistry } from './ActivatorRegistry';
+export { activators };
+
+export default function getActivatorProvider() : GetsBindingActivator { return registry; }

@@ -4,12 +4,11 @@ import type { UnobtrusiveBindingDefinition } from './UnobtrusiveBindingDefinitio
 import type { BindingDefinition } from '../BindingDefinition';
 import { BindingOptions } from '../../core';
 import { Binding, BindingActivator } from '../../binding';
-import { GetsBindingActivator } from '../../GetsBindingActivator';
+import getActivatorProvider, { GetsBindingActivator } from '../../GetsBindingActivator';
 import type { ActivatorIdentifier } from '../../GetsBindingActivator';
+import type { ElementBinding } from '../ElementBinding';
 
-function getDefaultBindingActivatorProvider() {
-    throw new Error('Not implemented yet');
-}
+function getDefaultBindingActivatorProvider() { return getActivatorProvider(); }
 
 function reduceUnotrusiveDefinition(accumulator : Array<BindingDefinition<mixed>>,
                                     current : UnobtrusiveBindingDefinition<mixed>) : Array<BindingDefinition<mixed>> {
@@ -43,9 +42,10 @@ export class UnobtrusiveBindingsProvider implements GetsElementBindings {
     #definitions : Array<UnobtrusiveBindingDefinition<mixed>>;
     #activatorFactory : GetsBindingActivator;
 
-    getBindings(element : HTMLElement) : Array<Binding<mixed>> {
+    getBindings(element : HTMLElement) : Promise<ElementBinding> {
         const bindingDefs = getMatchingBindingDefinitions(this.#definitions, element);
-        return bindingDefs.map(def => getBinding(def, this.#activatorFactory));
+        const output = bindingDefs.map(def => getBinding(def, this.#activatorFactory));
+        return Promise.resolve({element, bindings: output});
     }
 
     constructor(definitions : Array<UnobtrusiveBindingDefinition<mixed>>, options : BindingOptions) {
