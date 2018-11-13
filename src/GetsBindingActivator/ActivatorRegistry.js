@@ -1,16 +1,7 @@
 //@flow
 import type { BindingActivator } from '../binding';
 import type { ActivatorIdentifier } from './ActivatorIdentifier';
-
-export interface GetsBindingActivator {
-    getActivator(name : string) : BindingActivator<mixed>;
-}
-
-export interface RegistersBindingActivators {
-    add(activator : BindingActivator<mixed>, alternativeName? : string) : void;
-    remove(activator : ActivatorIdentifier<mixed>) : bool;
-    getAll() : Map<string,BindingActivator<mixed>>;
-}
+import { GetsBindingActivator, RegistersBindingActivators } from '.';
 
 function throwAlreadyRegisteredError(name : string) {
     throw new Error(`An activator named "${name}" is already registered; do not register the same activator twice.
