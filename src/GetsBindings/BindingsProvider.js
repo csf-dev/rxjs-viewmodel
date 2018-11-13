@@ -1,6 +1,6 @@
 //@flow
 import { Binding } from '../binding';
-import { GetsBindings } from './GetsBindings';
+import { GetsBindings } from '.';
 import { GetsElementBindings } from './GetsElementBindings';
 import { GetsAllHTMLElements } from './ElementProvider';
 import type { ElementBinding } from './ElementBinding';
