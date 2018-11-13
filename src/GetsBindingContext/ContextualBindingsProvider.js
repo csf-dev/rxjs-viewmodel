@@ -8,16 +8,18 @@ export class ContextualBindingsProvider implements GetsContextualBindings {
     #contextFactory : GetsBindingContext;
 
     getContextualBindings(bindings : Map<HTMLElement,Array<Binding<mixed>>>) : Array<ContextualBinding<mixed>> {
-        const output : Array<ContextualBinding<mixed>> = [];
+        return Array.from(bindings.entries()).reduce((acc, next) => {
+            const [ element, elementBindings ] = next;
 
-        bindings.forEach((elementBindings, element) => {
-            elementBindings.forEach(binding => {
-                const context = this.#contextFactory.getContext(element, binding, elementBindings);
-                output.push({ binding: binding, context: context });
-            });
-        });
+            acc.push(...elementBindings.map(binding => {
+                return {
+                    binding: binding,
+                    context: this.#contextFactory.getContext(element, binding, elementBindings)
+                };
+            }));
 
-        return output;
+            return acc;
+        }, []);
     }
 
     constructor(contextFactory : GetsBindingContext) {
