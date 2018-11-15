@@ -1,5 +1,5 @@
 //@flow
-import { Binding } from '../binding';
+import { BindingDeclaration } from '../binding';
 import { GetsBindings } from '.';
 import { GetsElementBindings } from './GetsElementBindings';
 import { GetsAllHTMLElements } from './ElementProvider';
@@ -9,7 +9,7 @@ export class BindingsProvider implements GetsBindings {
     #elementBindingsProvider : GetsElementBindings;
     #elementsProvider : GetsAllHTMLElements;
 
-    getBindings(element : HTMLElement) : Promise<Map<HTMLElement,Array<Binding<mixed>>>> {
+    getBindings(element : HTMLElement) : Promise<Map<HTMLElement,Array<BindingDeclaration<mixed>>>> {
         const allElements = this.#elementsProvider.getAllElements(element);
 
         const elementBindingPromises = allElements

@@ -1,9 +1,9 @@
 //@flow
 import { GetsBindings } from '../GetsBindings';
-import { GetsBindingContext, GetsContextualBindings } from '../GetsBindingContext';
+import { GetsBindingContext, GetsActivatableBindings } from '../GetsBindingContext';
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
-import type { ContextualBinding } from '../binding';
-import { ActivatedBinding, Binding, BindingContext, ModelContext, BindingActivator } from '../binding';
+import type { ActivatableBinding } from '../binding';
+import { LiveBinding, BindingDeclaration, BindingContext, ModelContext, BindingActivator } from '../binding';
 import { getDom } from '../rendering';
 import BindingsInitializer from './BindingsInitializer';
 
@@ -11,7 +11,7 @@ describe('The bindings initializer', () => {
     let
         element : HTMLElement,
         bindingsProvider : GetsBindings,
-        contextualBindingProvider : GetsContextualBindings,
+        contextualBindingProvider : GetsActivatableBindings,
         bulkActivator : ActivatesManyBindings;
 
 
@@ -77,7 +77,7 @@ describe('The bindings initializer', () => {
     });
 });
 
-function getMockBindingsProvider(result? : Map<HTMLElement,Array<Binding<mixed>>>) : GetsBindings {
+function getMockBindingsProvider(result? : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : GetsBindings {
     const res = result || new Map();
     return {
         getBindings(element : HTMLElement) {
@@ -90,14 +90,14 @@ function getMockBindingsProvider(result? : Map<HTMLElement,Array<Binding<mixed>>
     };
 }
 
-function getMockContextualBindingProvider(result? : Array<ContextualBinding<mixed>>) : GetsContextualBindings {
+function getMockContextualBindingProvider(result? : Array<ActivatableBinding<mixed>>) : GetsActivatableBindings {
     const res = result || [];
-    return { getContextualBindings(bindings : Map<HTMLElement,Array<Binding<mixed>>>) { return res; } };
+    return { getContextualBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) { return res; } };
 }
 
-function getMockBulkBindingActivator(result? : Array<Promise<ActivatedBinding<mixed>>>) : ActivatesManyBindings {
+function getMockBulkBindingActivator(result? : Array<Promise<LiveBinding<mixed>>>) : ActivatesManyBindings {
     const res = result || [];
-    return { activateAll(contextualBindings : Array<ContextualBinding<mixed>>) { return res; } };
+    return { activateAll(contextualBindings : Array<ActivatableBinding<mixed>>) { return res; } };
 }
 
 function getMockActivator(name : string) : BindingActivator<mixed> {
@@ -111,5 +111,5 @@ function getMockActivator(name : string) : BindingActivator<mixed> {
 
 function getMockBinding(activatorName : string) {
     const activator = getMockActivator(activatorName);
-    return new Binding(activator, ctx => {});
+    return new BindingDeclaration(activator, ctx => {});
 }

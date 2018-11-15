@@ -2,7 +2,7 @@
 import BindingContext from './BindingContext';
 import { BindingActivator } from './BindingActivator';
 
-export default class ActivatedBinding<TParams : mixed> {
+export default class LiveBinding<TParams : mixed> {
     #context : BindingContext<TParams>;
     #activator : BindingActivator<TParams>;
 

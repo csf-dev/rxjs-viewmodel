@@ -3,7 +3,7 @@ import { GetsElementBindings } from '../GetsElementBindings';
 import type { UnobtrusiveBindingDefinition } from './UnobtrusiveBindingDefinition';
 import type { BindingDefinition } from '../BindingDefinition';
 import { BindingOptions } from '../../core';
-import { Binding, BindingActivator } from '../../binding';
+import { BindingDeclaration, BindingActivator } from '../../binding';
 import getActivatorProvider, { GetsBindingActivator } from '../../GetsBindingActivator';
 import type { ActivatorIdentifier } from '../../GetsBindingActivator';
 import type { ElementBinding } from '../ElementBinding';
@@ -33,9 +33,9 @@ function getActivator(identifier : ActivatorIdentifier<mixed>,
 }
 
 function getBinding(def : BindingDefinition<mixed>,
-                    activatorFactory : GetsBindingActivator) : Binding<mixed> {
+                    activatorFactory : GetsBindingActivator) : BindingDeclaration<mixed> {
     const activator = getActivator(def.activator, activatorFactory);
-    return new Binding(activator, def.paramsProvider);
+    return new BindingDeclaration(activator, def.paramsProvider);
 }
 
 export class UnobtrusiveBindingsProvider implements GetsElementBindings {

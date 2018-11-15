@@ -1,15 +1,15 @@
 //@flow
-import { Binding, BindingContext } from '../binding';
-import type { ContextualBinding } from '../binding';
+import { BindingDeclaration, BindingContext } from '../binding';
+import type { ActivatableBinding } from '../binding';
 
 export interface GetsBindingContext {
     getContext(element : HTMLElement,
-               binding : Binding<mixed>,
-               allBindings : Array<Binding<mixed>>) : BindingContext<mixed>;
+               binding : BindingDeclaration<mixed>,
+               allBindings : Array<BindingDeclaration<mixed>>) : BindingContext<mixed>;
 }
 
-export interface GetsContextualBindings {
-    getContextualBindings(bindings : Map<HTMLElement,Array<Binding<mixed>>>) : Array<ContextualBinding<mixed>>;
+export interface GetsActivatableBindings {
+    getContextualBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Array<ActivatableBinding<mixed>>;
 }
 
-export { default as getContextualBindingsProvider } from './ContextualBindingsProvider';
+export { default as getContextualBindingsProvider } from './ActivatableBindingsProvider';

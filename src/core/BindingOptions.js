@@ -1,6 +1,6 @@
 //@flow
 import { GetsBindings } from '../GetsBindings';
-import { GetsBindingContext, GetsContextualBindings } from '../GetsBindingContext';
+import { GetsBindingContext, GetsActivatableBindings } from '../GetsBindingContext';
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
 import { GetsBindingActivator } from '../GetsBindingActivator';
 
@@ -25,9 +25,9 @@ export default class BindingOptions {
         const output : any = this.#options.get(bulkBindingActivator);
         return (output : ActivatesManyBindings) || null;
     }
-    get contextualBindingsProvider() : ?GetsContextualBindings {
+    get contextualBindingsProvider() : ?GetsActivatableBindings {
         const output : any = this.#options.get(contextualBindingsProvider);
-        return (output : GetsContextualBindings) || null;
+        return (output : GetsActivatableBindings) || null;
     }
 
     get bindingActivatorProvider() : ?GetsBindingActivator {

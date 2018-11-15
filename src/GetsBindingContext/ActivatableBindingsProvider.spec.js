@@ -1,8 +1,8 @@
 //@flow
-import { GetsContextualBindings, GetsBindingContext, } from '.';
-import { ContextualBindingsProvider } from './ContextualBindingsProvider';
-import { BindingActivator, Binding, BindingContext } from '../binding';
-import type { ContextualBinding } from '../binding';
+import { GetsActivatableBindings, GetsBindingContext, } from '.';
+import { ActivatableBindingsProvider } from './ActivatableBindingsProvider';
+import { BindingActivator, BindingDeclaration, BindingContext } from '../binding';
+import type { ActivatableBinding } from '../binding';
 
 describe('The contextual bindings provider', () => {
     it('should return an array of contextual bindings pointing to the correct bindings, across multiple elements', () => {
@@ -20,7 +20,7 @@ describe('The contextual bindings provider', () => {
             [ element2, [ element2Binding1, element2Binding2 ] ]
         ]);
 
-        const sut = new ContextualBindingsProvider(bindingContextFactory);
+        const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
         const result = sut.getContextualBindings(elementsAndBindings);
 
@@ -58,7 +58,7 @@ describe('The contextual bindings provider', () => {
             }
         });
 
-        const sut = new ContextualBindingsProvider(bindingContextFactory);
+        const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
         const result = sut.getContextualBindings(elementsAndBindings);
 
@@ -68,7 +68,7 @@ describe('The contextual bindings provider', () => {
 
 const getElement : () => HTMLElement = () => document.createElement('div');
 
-const getBinding = () => new Binding({ name: 'foo', activate: ctx => null }, ctx => 1);
+const getBinding = () => new BindingDeclaration({ name: 'foo', activate: ctx => null }, ctx => 1);
 
 const getMockBindingContextFactory : () => GetsBindingContext = () => {
     return {

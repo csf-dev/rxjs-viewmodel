@@ -1,24 +1,24 @@
 //@flow
 import BindingOptions from './BindingOptions';
 import { GetsBindings } from '../GetsBindings';
-import { GetsBindingContext, GetsContextualBindings } from '../GetsBindingContext';
+import { GetsBindingContext, GetsActivatableBindings } from '../GetsBindingContext';
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
-import { ActivatedBinding, ActivatedBindings, Binding } from '../binding';
-import type { ContextualBinding } from '../binding';
+import { LiveBinding, LiveBindingsCollection, BindingDeclaration } from '../binding';
+import type { ActivatableBinding } from '../binding';
 
 function getDefaultBindingsProvider() : GetsBindings {
     throw new Error('Not implemented yet');
 }
 
-function getDefaultContextualBindingsProvider() : GetsContextualBindings {
+function getDefaultContextualBindingsProvider() : GetsActivatableBindings {
     throw new Error('Not implemented yet');
 }
 function getDefaultBulkBindingActivator() : ActivatesManyBindings {
     throw new Error('Not implemented yet');
 }
 
-function activateAll(contextualBindings : Array<ContextualBinding<mixed>>,
-                     bulkBindingActivator : ActivatesManyBindings) : Promise<Array<ActivatedBinding<mixed>>> {
+function activateAll(contextualBindings : Array<ActivatableBinding<mixed>>,
+                     bulkBindingActivator : ActivatesManyBindings) : Promise<Array<LiveBinding<mixed>>> {
     const activationPromises = bulkBindingActivator.activateAll(contextualBindings);
     return Promise.all(activationPromises);
 }
@@ -27,7 +27,7 @@ export default class BindingsInitializer {
     #options : BindingOptions;
     #element : HTMLElement;
 
-    async initialize(viewModel : mixed) : Promise<ActivatedBindings> {
+    async initialize(viewModel : mixed) : Promise<LiveBindingsCollection> {
         const opts = this.#options;
 
         const bindingsProvider = opts.bindingsProvider || getDefaultBindingsProvider();
@@ -38,7 +38,7 @@ export default class BindingsInitializer {
         const contextualBindings = contextualBindingsProvider.getContextualBindings(bindings);
         const activationsCompleted = await activateAll(contextualBindings, bulkBindingActivator);
 
-        return new ActivatedBindings(activationsCompleted);
+        return new LiveBindingsCollection(activationsCompleted);
     }
 
     constructor(element : HTMLElement, options? : {}) {

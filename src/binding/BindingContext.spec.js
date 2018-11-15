@@ -1,7 +1,7 @@
 //@flow
 
 import BindingContext from './BindingContext';
-import Binding from './Binding';
+import BindingDeclaration from './BindingDeclaration';
 import { BindingActivator } from './BindingActivator';
 import ModelContext from './ModelContext';
 import { ProvidesBindingDom } from '../rendering/BindingDom';
@@ -48,7 +48,7 @@ describe('The BindingContext class', () => {
         };
     }
 
-    function getASampleBinding(name : string = 'foo') : Binding<mixed> {
-        return new Binding({ name: name, activate: ctx => {} }, (ctx) => 123);
+    function getASampleBinding(name : string = 'foo') : BindingDeclaration<mixed> {
+        return new BindingDeclaration({ name: name, activate: ctx => {} }, (ctx) => 123);
     }
 });

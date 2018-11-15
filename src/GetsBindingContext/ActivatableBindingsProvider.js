@@ -1,13 +1,13 @@
 //@flow
-import { GetsBindingContext, GetsContextualBindings } from './index';
-import { Binding } from '../binding';
-import type { ContextualBinding } from '../binding';
+import { GetsBindingContext, GetsActivatableBindings } from './index';
+import { BindingDeclaration } from '../binding';
+import type { ActivatableBinding } from '../binding';
 import BindingOptions from '../core/BindingOptions';
 
-export class ContextualBindingsProvider implements GetsContextualBindings {
+export class ActivatableBindingsProvider implements GetsActivatableBindings {
     #contextFactory : GetsBindingContext;
 
-    getContextualBindings(bindings : Map<HTMLElement,Array<Binding<mixed>>>) : Array<ContextualBinding<mixed>> {
+    getContextualBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Array<ActivatableBinding<mixed>> {
         return Array.from(bindings.entries()).reduce((acc, next) => {
             const [ element, elementBindings ] = next;
 
@@ -29,5 +29,5 @@ export class ContextualBindingsProvider implements GetsContextualBindings {
 
 export default function getContextualBindingsProvider(options : BindingOptions) {
     if(!options.bindingContextProvider) throw new Error('Not implemented yet');
-    return new ContextualBindingsProvider(options.bindingContextProvider);
+    return new ActivatableBindingsProvider(options.bindingContextProvider);
 }

@@ -1,4 +1,4 @@
 //@flow
-import { Binding } from '../binding';
+import { BindingDeclaration } from '../binding';
 
-export type ElementBinding = { element: HTMLElement, bindings: Array<Binding<mixed>> };
+export type ElementBinding = { element: HTMLElement, bindings: Array<BindingDeclaration<mixed>> };
