@@ -1,11 +1,22 @@
 //@flow
 import BindingContext from './BindingContext';
 import { BindingActivator } from './BindingActivator';
+import activatorDeactivatorFactory from './ActivatesAndDeactivatesBinding';
+import { ActivatesAndDeactivatesBinding } from './ActivatesAndDeactivatesBinding';
 
-export default class LiveBinding<TParams : mixed> {
+export interface StatefulBinding<+TParams : mixed> {
+    +isActive : bool;
+    +context : BindingContext<TParams>;
+    +activator : BindingActivator<TParams>;
+    activate() : Promise<bool>;
+    deactivate() : Promise<bool>;
+}
+
+export default class LiveBinding<TParams : mixed> implements StatefulBinding<TParams> {
     #context : BindingContext<TParams>;
     #activator : BindingActivator<TParams>;
     #active : bool;
+    #activatorDeactivator : ActivatesAndDeactivatesBinding;
 
     get context() : BindingContext<TParams> { return this.#context; };
     get activator() : BindingActivator<TParams> { return this.#activator; };
@@ -13,22 +24,18 @@ export default class LiveBinding<TParams : mixed> {
 
     activate() : Promise<bool> {
         if(this.isActive) return Promise.resolve(false);
-
-        return Promise.resolve(this.activator.activate(this.context))
-            .then(undef => Promise.resolve(true));
+        return this.#activatorDeactivator.activate((this : StatefulBinding<mixed>));
     }
 
     deactivate() : Promise<bool> {
         if(!this.isActive) return Promise.resolve(false);
-        if(!this.activator.deactivate) return Promise.resolve(false);
-        
-        return Promise.resolve(this.activator.deactivate(this.context))
-            .then(undef => Promise.resolve(true));
+        return this.#activatorDeactivator.deactivate((this : StatefulBinding<mixed>));
     }
 
     constructor(context : BindingContext<TParams>, activator : BindingActivator<TParams>) {
         this.#context = context;
         this.#activator = activator;
         this.#active = false;
+        this.#activatorDeactivator = activatorDeactivatorFactory();
     }
 };
