@@ -3,22 +3,22 @@ import { ActivatorRegistry } from './ActivatorRegistry';
 import { BindingActivator, BindingContext } from '../binding';
 
 describe('The activator registry', () => {
-    it('should be able to add an activator', () => {
+    it('should be able to add an activator', async () => {
         const activator = getActivator('foo');
         const sut = new ActivatorRegistry();
 
         sut.add(activator);
 
-        expect(sut.getActivator('foo')).toBe(activator);
+        expect(await sut.getActivator('foo')).toBe(activator);
     });
 
-    it('should be able to add an activator with an altenative name', () => {
+    it('should be able to add an activator with an altenative name', async () => {
         const activator = getActivator('foo');
         const sut = new ActivatorRegistry();
 
         sut.add(activator, 'bar');
 
-        expect(sut.getActivator('bar')).toBe(activator);
+        expect(await sut.getActivator('bar')).toBe(activator);
     });
 
     it('should throw an error when trying to retrieve an activator using its original name, if it was added with an alternative name', () => {

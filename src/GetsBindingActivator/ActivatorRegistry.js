@@ -46,13 +46,13 @@ export class ActivatorRegistry implements RegistersBindingActivators, GetsBindin
 
     getAll() : Map<string,BindingActivator<mixed>> { return new Map(this.#activators); }
 
-    getActivator(name : string) : BindingActivator<mixed> {
+    getActivator(name : string) : Promise<BindingActivator<mixed>> {
         const activator = this.#activators.get(name);
 
         if(!activator)
             throw new Error(`There must be a registered activator with the name "${name}".`);
         
-        return activator;
+        return Promise.resolve(activator);
     }
 
     constructor() {

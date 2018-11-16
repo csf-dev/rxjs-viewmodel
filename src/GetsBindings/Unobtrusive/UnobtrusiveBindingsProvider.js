@@ -27,15 +27,15 @@ function getMatchingBindingDefinitions(definitions : Array<UnobtrusiveBindingDef
 }
 
 function getActivator(identifier : ActivatorIdentifier<mixed>,
-                      activatorFactory : GetsBindingActivator) : BindingActivator<mixed> {
-    if(typeof identifier !== 'string') return identifier;
+                      activatorFactory : GetsBindingActivator) : Promise<BindingActivator<mixed>> {
+    if(typeof identifier !== 'string') return Promise.resolve(identifier);
     return activatorFactory.getActivator(identifier);
 }
 
 function getBinding(def : BindingDefinition<mixed>,
-                    activatorFactory : GetsBindingActivator) : BindingDeclaration<mixed> {
-    const activator = getActivator(def.activator, activatorFactory);
-    return new BindingDeclaration(activator, def.paramsProvider);
+                    activatorFactory : GetsBindingActivator) : Promise<BindingDeclaration<mixed>> {
+    return getActivator(def.activator, activatorFactory)
+        .then(activator => Promise.resolve(new BindingDeclaration(activator, def.paramsProvider)));
 }
 
 export class UnobtrusiveBindingsProvider implements GetsElementBindings {
@@ -44,8 +44,9 @@ export class UnobtrusiveBindingsProvider implements GetsElementBindings {
 
     getBindings(element : HTMLElement) : Promise<ElementBinding> {
         const bindingDefs = getMatchingBindingDefinitions(this.#definitions, element);
-        const output = bindingDefs.map(def => getBinding(def, this.#activatorFactory));
-        return Promise.resolve({element, bindings: output});
+        const bindingPromises = bindingDefs.map(def => getBinding(def, this.#activatorFactory));
+        return Promise.all(bindingPromises)
+            .then(bindings => { return { element, bindings }; });
     }
 
     constructor(definitions : Array<UnobtrusiveBindingDefinition<mixed>>, options : BindingOptions) {
