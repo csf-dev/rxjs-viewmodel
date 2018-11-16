@@ -3,5 +3,5 @@ import { LiveBinding } from '../binding';
 import type { ActivatableBinding } from '../binding';
 
 export interface ActivatesManyBindings {
-    activateAll(contextualBindings : Array<ActivatableBinding<mixed>>) : Array<Promise<LiveBinding<mixed>>>;
+    activateAll(activatableBindings : Array<ActivatableBinding<mixed>>) : Array<Promise<LiveBinding<mixed>>>;
 }
