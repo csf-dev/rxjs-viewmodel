@@ -5,9 +5,9 @@ import { BindingActivator, BindingDeclaration, BindingContext } from '../binding
 import type { ActivatableBinding } from '../binding';
 
 describe('The contextual bindings provider', () => {
-    it('should return an array of contextual bindings pointing to the correct bindings, across multiple elements', () => {
+    it('should return an array of contextual bindings pointing to the correct bindings, across multiple elements', async () => {
         const bindingContextFactory = getMockBindingContextFactory();
-        spyOn(bindingContextFactory, 'getContext').and.returnValue(null);
+        spyOn(bindingContextFactory, 'getContext').and.returnValue(Promise.resolve(null));
 
         const element1 = getElement();
         const element2 = getElement();
@@ -22,12 +22,12 @@ describe('The contextual bindings provider', () => {
 
         const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
-        const result = sut.getContextualBindings(elementsAndBindings);
+        const result = await sut.getContextualBindings(elementsAndBindings);
 
         expect(result.map(item => item.binding)).toEqual([element1Binding1, element2Binding1, element2Binding2]);
     });
 
-    it('should return an array of contextual bindings pointing to the correct context, across multiple elements', () => {
+    it('should return an array of contextual bindings pointing to the correct context, across multiple elements', async () => {
         const element1 = getElement();
         const element2 = getElement();
         const element1Binding1 = getBinding();
@@ -48,11 +48,11 @@ describe('The contextual bindings provider', () => {
         spyOn(bindingContextFactory, 'getContext').and.callFake((ele, bin, allBin) => {
             switch(bin) {
             case element1Binding1:
-                return context1;
+                return Promise.resolve(context1);
             case element2Binding1:
-                return context2;
+                return Promise.resolve(context2);
             case element2Binding2:
-                return context3;
+                return Promise.resolve(context3);
             default:
                 throw new Error('Unexpected binding');
             }
@@ -60,7 +60,7 @@ describe('The contextual bindings provider', () => {
 
         const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
-        const result = sut.getContextualBindings(elementsAndBindings);
+        const result = await sut.getContextualBindings(elementsAndBindings);
 
         expect(result.map(item => item.context)).toEqual([context1, context2, context3]);
     });
@@ -72,6 +72,6 @@ const getBinding = () => new BindingDeclaration({ name: 'foo', activate: ctx => 
 
 const getMockBindingContextFactory : () => GetsBindingContext = () => {
     return {
-        getContext(element, binding, allBindings) : BindingContext<mixed> { throw new Error('Not implemented'); }
+        getContext(element, binding, allBindings) : Promise<BindingContext<mixed>> { throw new Error('Not implemented'); }
     };
 }

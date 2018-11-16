@@ -7,19 +7,11 @@ import BindingOptions from '../core/BindingOptions';
 export class ActivatableBindingsProvider implements GetsActivatableBindings {
     #contextFactory : GetsBindingContext;
 
-    getContextualBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Array<ActivatableBinding<mixed>> {
-        return Array.from(bindings.entries()).reduce((acc, next) => {
-            const [ element, elementBindings ] = next;
-
-            acc.push(...elementBindings.map(binding => {
-                return {
-                    binding: binding,
-                    context: this.#contextFactory.getContext(element, binding, elementBindings)
-                };
-            }));
-
-            return acc;
-        }, []);
+    getContextualBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Promise<Array<ActivatableBinding<mixed>>> {
+        const entries = Array.from(bindings.entries());
+        const reducer = getBindingDeclarationReducer(this.#contextFactory);
+        const bindingPromises = entries.reduce(reducer, []);
+        return Promise.all(bindingPromises);
     }
 
     constructor(contextFactory : GetsBindingContext) {
@@ -30,4 +22,20 @@ export class ActivatableBindingsProvider implements GetsActivatableBindings {
 export default function getContextualBindingsProvider(options : BindingOptions) {
     if(!options.bindingContextProvider) throw new Error('Not implemented yet');
     return new ActivatableBindingsProvider(options.bindingContextProvider);
+}
+
+function getBindingDeclarationReducer(contextFactory : GetsBindingContext) {
+    return function (accumulator : Array<Promise<ActivatableBinding<mixed>>>,
+                     item : [HTMLElement, Array<BindingDeclaration<mixed>>]) : Array<Promise<ActivatableBinding<mixed>>> {
+        const [ element, elementBindings ] = item;
+
+        const activatableBindings = elementBindings
+            .map(binding => {
+                return contextFactory.getContext(element, binding, elementBindings)
+                    .then((context) : Promise<ActivatableBinding<mixed>> => Promise.resolve({ binding, context }));
+            });
+
+        accumulator.push(...activatableBindings);
+        return accumulator;
+    }
 }

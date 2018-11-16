@@ -92,7 +92,7 @@ function getMockBindingsProvider(result? : Map<HTMLElement,Array<BindingDeclarat
 
 function getMockContextualBindingProvider(result? : Array<ActivatableBinding<mixed>>) : GetsActivatableBindings {
     const res = result || [];
-    return { getContextualBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) { return res; } };
+    return { getContextualBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) { return Promise.resolve(res); } };
 }
 
 function getMockBulkBindingActivator(result? : Array<Promise<LiveBinding<mixed>>>) : ActivatesManyBindings {
