@@ -4,7 +4,7 @@ import type { BindingActivator } from '../binding';
 import type { ActivatorIdentifier } from './ActivatorIdentifier';
 
 export interface GetsBindingActivator {
-    getActivator(name : string) : BindingActivator<mixed>;
+    getActivator(name : string) : Promise<BindingActivator<mixed>>;
 }
 
 export { default as activators } from './ActivatorRegistry';

@@ -35,7 +35,7 @@ export default class BindingsInitializer {
         const bulkBindingActivator = opts.bulkBindingActivator || getDefaultBulkBindingActivator();
 
         const bindings = await bindingsProvider.getBindings(this.#element);
-        const contextualBindings = contextualBindingsProvider.getContextualBindings(bindings);
+        const contextualBindings = await contextualBindingsProvider.getContextualBindings(bindings);
         const activationsCompleted = await activateAll(contextualBindings, bulkBindingActivator);
 
         return new LiveBindingsCollection(activationsCompleted);
