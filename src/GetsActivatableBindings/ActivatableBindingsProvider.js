@@ -7,7 +7,7 @@ import BindingOptions from '../core/BindingOptions';
 export class ActivatableBindingsProvider implements GetsActivatableBindings {
     #contextFactory : GetsBindingContext;
 
-    getContextualBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Promise<Array<ActivatableBinding<mixed>>> {
+    getActivatableBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Promise<Array<ActivatableBinding<mixed>>> {
         const entries = Array.from(bindings.entries());
         const reducer = getBindingDeclarationReducer(this.#contextFactory);
         const bindingPromises = entries.reduce(reducer, []);
@@ -19,7 +19,7 @@ export class ActivatableBindingsProvider implements GetsActivatableBindings {
     }
 }
 
-export default function getContextualBindingsProvider(options : BindingOptions) {
+export default function getActivatableBindingsProvider(options : BindingOptions) {
     if(!options.bindingContextProvider) throw new Error('Not implemented yet');
     return new ActivatableBindingsProvider(options.bindingContextProvider);
 }

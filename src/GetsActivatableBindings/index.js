@@ -9,7 +9,7 @@ export interface GetsBindingContext {
 }
 
 export interface GetsActivatableBindings {
-    getContextualBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Promise<Array<ActivatableBinding<mixed>>>;
+    getActivatableBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Promise<Array<ActivatableBinding<mixed>>>;
 }
 
-export { default as getContextualBindingsProvider } from './ActivatableBindingsProvider';
+export { default as getActivatableBindingsProvider } from './ActivatableBindingsProvider';

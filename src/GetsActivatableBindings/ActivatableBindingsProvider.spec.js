@@ -22,7 +22,7 @@ describe('The contextual bindings provider', () => {
 
         const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
-        const result = await sut.getContextualBindings(elementsAndBindings);
+        const result = await sut.getActivatableBindings(elementsAndBindings);
 
         expect(result.map(item => item.binding)).toEqual([element1Binding1, element2Binding1, element2Binding2]);
     });
@@ -60,7 +60,7 @@ describe('The contextual bindings provider', () => {
 
         const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
-        const result = await sut.getContextualBindings(elementsAndBindings);
+        const result = await sut.getActivatableBindings(elementsAndBindings);
 
         expect(result.map(item => item.context)).toEqual([context1, context2, context3]);
     });

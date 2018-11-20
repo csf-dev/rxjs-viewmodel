@@ -1,7 +1,7 @@
 //@flow
 import BindingOptions from './BindingOptions';
 import { GetsBindings } from '../GetsBindings';
-import { GetsBindingContext, GetsActivatableBindings } from '../GetsBindingContext';
+import { GetsBindingContext, GetsActivatableBindings } from '../GetsActivatableBindings';
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
 import { LiveBinding, LiveBindingsCollection, BindingDeclaration } from '../binding';
 import type { ActivatableBinding } from '../binding';
@@ -35,7 +35,7 @@ export default class BindingsInitializer {
         const bulkBindingActivator = opts.bulkBindingActivator || getDefaultBulkBindingActivator();
 
         const bindings = await bindingsProvider.getBindings(this.#element);
-        const contextualBindings = await contextualBindingsProvider.getContextualBindings(bindings);
+        const contextualBindings = await contextualBindingsProvider.getActivatableBindings(bindings);
         const activationsCompleted = await activateAll(contextualBindings, bulkBindingActivator);
 
         return new LiveBindingsCollection(activationsCompleted);
