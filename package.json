@@ -4,7 +4,8 @@
   "description": "Small MVVM library based upon RxJS",
   "main": "src/index.js",
   "scripts": {
-    "test": "npx karma start"
+    "test": "npx karma start",
+    "tests": "npx karma start --no-single-run"
   },
   "repository": {
     "type": "git",
