@@ -20,7 +20,7 @@ module.exports = function(config) {
     autoWatch: true,
     browsers: ['PhantomJS'],
     phantomjsLauncher: { exitOnResourceError: true },
-    singleRun: false,
+    singleRun: true,
     concurrency: Infinity
   });
 }
