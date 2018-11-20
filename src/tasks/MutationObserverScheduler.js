@@ -1,7 +1,7 @@
 //@flow
 import type { Scheduler } from './Scheduler';
 
-export default function tryGetMutationObservableScheduler() : ?Scheduler {
+export default function tryGetMutationObserverScheduler() : ?Scheduler {
     if(!window || !window.document || !window['MutationObserver']) return null;
 
     return function() {

@@ -1,5 +1,5 @@
 //@flow
-import tryGetMutationObservableScheduler from './MutationObservableScheduler';
+import tryGetMutationObservableScheduler from './MutationObserverScheduler';
 import tryGetReadyStateChangeScheduler from './ReadyStateChangeScheduler';
 import getSetTimeoutScheduler from './SetTimeoutScheduler';
 
