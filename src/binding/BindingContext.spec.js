@@ -25,7 +25,7 @@ describe('The BindingContext class', () => {
 
             const result = sut.getAllBindings();
 
-            expect(result.length).toBe(1);
+            expect(result.length).toBe(2);
         });
     });
 
