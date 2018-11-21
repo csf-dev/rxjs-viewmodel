@@ -206,7 +206,6 @@ function createBindingDom(element : HTMLElement) : ProvidesBindingDom {
     return {
         element: element,
         placeholder: placeholder,
-        isBindingRoot: false,
         omitTag: false,
         remove: false
     };

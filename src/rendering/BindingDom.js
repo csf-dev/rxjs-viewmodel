@@ -4,7 +4,6 @@ import getPlaceholder from './ElementPlaceholder';
 import getSubstitutor, { ReplacesElementWithSubstitute } from './DomSubstitutor';
 
 export interface ProvidesBindingDom {
-    +isBindingRoot : bool;
     +element : HTMLElement;
     +placeholder : SubstitutesElement;
     omitTag : bool;
@@ -12,7 +11,6 @@ export interface ProvidesBindingDom {
 };
 
 export class BindingDom implements ProvidesBindingDom {
-    #isBindingRoot : bool;
     #element : HTMLElement;
     #placeholder : SubstitutesElement;
     #substitutor : ReplacesElementWithSubstitute;
@@ -20,7 +18,6 @@ export class BindingDom implements ProvidesBindingDom {
     #omitted : bool;
     #removed : bool;
 
-    get isBindingRoot() : bool { return this.#isBindingRoot; }
     get element() : HTMLElement { return this.#element; }
     get placeholder() : SubstitutesElement { return this.#placeholder; }
     get omitTag() : bool { return this.#omitted; }
@@ -49,11 +46,9 @@ export class BindingDom implements ProvidesBindingDom {
     }
 
     constructor(element : HTMLElement,
-                isBindingRoot : bool,
                 placeholder : SubstitutesElement,
                 substitutor : ReplacesElementWithSubstitute) {
         this.#element = element;
-        this.#isBindingRoot = isBindingRoot;
         this.#placeholder = placeholder;
         this.#substitutor = substitutor;
 
@@ -62,9 +57,8 @@ export class BindingDom implements ProvidesBindingDom {
     }
 }
 
-export default function getDom(element : HTMLElement,
-                               isBindingRoot : bool = false) : ProvidesBindingDom {
+export default function getDom(element : HTMLElement) : ProvidesBindingDom {
     const placeholder = getPlaceholder(element);
     const substitutor = getSubstitutor();
-    return new BindingDom(element, isBindingRoot, placeholder, substitutor);
+    return new BindingDom(element, placeholder, substitutor);
 }
