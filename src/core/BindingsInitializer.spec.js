@@ -1,6 +1,7 @@
 //@flow
 import { GetsBindings } from '../GetsBindings';
-import { GetsBindingContext, GetsActivatableBindings } from '../GetsActivatableBindings';
+import { GetsActivatableBindings } from '../GetsActivatableBindings';
+import { GetsBindingContext } from '../GetsActivatableBindings/GetsBindingContext';
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
 import type { ActivatableBinding } from '../binding';
 import { LiveBinding, BindingDeclaration, BindingContext, ModelContext, BindingActivator } from '../binding';

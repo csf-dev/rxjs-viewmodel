@@ -40,7 +40,6 @@ describe('The BindingContext class', () => {
             get standin() { return document.createComment('Standin'); },
         };
         return {
-            get isBindingRoot() { return true; },
             get element() : HTMLElement { return document.createElement('div'); },
             get placeholder() { return placeholder; },
             omitTag: false,

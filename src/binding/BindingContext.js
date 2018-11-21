@@ -3,7 +3,7 @@ import { ProvidesBindingDom } from '../rendering/BindingDom';
 import ModelContext from './ModelContext';
 import BindingDeclaration from './BindingDeclaration';
 
-export default class BindingContext<TParams : mixed> {
+export default class BindingContext<+TParams : mixed> {
     #dom : ProvidesBindingDom;
     #model : ModelContext;
     #parameters : TParams;

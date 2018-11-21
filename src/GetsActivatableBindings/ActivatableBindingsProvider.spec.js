@@ -1,5 +1,6 @@
 //@flow
-import { GetsActivatableBindings, GetsBindingContext, } from '.';
+import { GetsActivatableBindings } from '.';
+import { GetsBindingContext } from './GetsBindingContext';
 import { ActivatableBindingsProvider } from './ActivatableBindingsProvider';
 import { BindingActivator, BindingDeclaration, BindingContext } from '../binding';
 import type { ActivatableBinding } from '../binding';
@@ -72,6 +73,6 @@ const getBinding = () => new BindingDeclaration({ name: 'foo', activate: ctx => 
 
 const getMockBindingContextFactory : () => GetsBindingContext = () => {
     return {
-        getContext(element, binding, allBindings) : Promise<BindingContext<mixed>> { throw new Error('Not implemented'); }
+        getContext<T>(element, binding, allBindings) : Promise<BindingContext<T>> { throw new Error('Not implemented'); }
     };
 }
