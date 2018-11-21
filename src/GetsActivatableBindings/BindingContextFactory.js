@@ -11,14 +11,11 @@ export class BindingContextFactory implements GetsBindingContext {
                           allBindings : Array<BindingDeclaration<mixed>>,
                           parentContext? : Promise<BindingContext<mixed>>) : Promise<BindingContext<?T>> {
         const dom = getDom(element);
-        const model = getModel(parentContext);
+        const model = getModel(parentContext, this.#vmRoot);
         const parameters = getParameters(binding, model);
 
         return Promise.all([model, parameters])
-            .then(([m, p]) => {
-                const context = new BindingContext<?T>(dom, m, p, allBindings);
-                return Promise.resolve(context);
-            });
+            .then(([m, p]) => Promise.resolve(new BindingContext<?T>(dom, m, p, allBindings)));
     }
 
     constructor(vmRoot : mixed) {
