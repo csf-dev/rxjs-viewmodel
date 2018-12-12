@@ -8,7 +8,7 @@ describe('The binding context factory.', () => {
         const sut = new BindingContextFactory(vm);
 
         const result = await sut.getContext(getElement(),
-                                            getBinding(ctx => ctx.getRoot<{myNumber:number}>().myNumber),
+                                            getBinding(ctx => ctx.getViewModel<{myNumber:number}>().myNumber),
                                             []);
 
         expect(result instanceof BindingContext).toBe(true);
@@ -19,7 +19,7 @@ describe('The binding context factory.', () => {
         const sut = new BindingContextFactory(vm);
 
         const result = await sut.getContext(getElement(),
-                                            getBinding(ctx => ctx.getRoot<{myNumber:number}>().myNumber + 1),
+                                            getBinding(ctx => ctx.getViewModel<{myNumber:number}>().myNumber + 1),
                                             []);
 
         expect(result.parameters).toEqual(5);
@@ -30,7 +30,7 @@ describe('The binding context factory.', () => {
         const sut = new BindingContextFactory(vm);
 
         const parent = await sut.getContext<number>(getElement(),
-                                                    getBinding(ctx => ctx.getRoot<{myNumber:number}>().myNumber + 1),
+                                                    getBinding(ctx => ctx.getViewModel<{myNumber:number}>().myNumber + 1),
                                                     []);
         parent.model.set('num', 22);
         const result = await sut.getContext(getElement(),

@@ -1,11 +1,11 @@
 //@flow
-import ModelContext from './ModelContext';
+import getModelContext, { ModelContext } from './ModelContext';
 
 describe('The ModelContext class', () => {
     let sut : ModelContext;
 
     beforeEach(() => {
-        sut = new ModelContext({ number: 5, obj: { foo: 'bar' } });
+        sut = getModelContext({ number: 5, obj: { foo: 'bar' } });
     });
 
     describe('when setting & getting variables', () => {
@@ -38,43 +38,35 @@ describe('The ModelContext class', () => {
             sut.set('key1', 5);
             sut.set('key2', 6);
 
-            var result = sut.getChild();
+            var result = sut.createChild();
 
             expect(result.get('key1')).toBe(5);
             expect(result.get('key2')).toBe(6);
         });
 
-        it('should create a child which is unaffected by subsequent changes to the parent', () => {
-            sut.set('key1', 5);
-            sut.set('key2', 6);
+        it('should create a child which receives changes made to the parent', () => {
+            var child = sut.createChild();
 
-            var result = sut.getChild();
             sut.set('key3', 7)
 
-            expect(result.get('key1')).toBe(5);
-            expect(result.get('key2')).toBe(6);
-            expect(result.get('key3')).toBeUndefined();
+            expect(child.get('key3')).toBe(7);
         });
 
-        it('should be able to shadow variables from the parent', () => {
-            sut.set('key1', 5);
-            sut.set('key2', 6);
+        it('should create a child which may shadow values in its parent', () => {
+            var child = sut.createChild();
 
-            var result = sut.getChild();
-            result.set('key2', 7)
+            child.set('key3', 8);
+            sut.set('key3', 7)
 
-            expect(result.get('key1')).toBe(5);
-            expect(result.get('key2')).toBe(7);
+            expect(child.get('key3')).toBe(8);
         });
 
         it('should not be able to redefine variables present upon its parent', () => {
-            sut.set('key1', 5);
+            var child = sut.createChild();
+
             sut.set('key2', 6);
+            child.set('key2', 7)
 
-            var result = sut.getChild();
-            result.set('key2', 7)
-
-            expect(result.get('key1')).toBe(5);
             expect(sut.get('key2')).toBe(6);
         });
     });

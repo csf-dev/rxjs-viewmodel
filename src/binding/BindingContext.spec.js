@@ -3,7 +3,7 @@
 import BindingContext from './BindingContext';
 import BindingDeclaration from './BindingDeclaration';
 import { BindingActivator } from './BindingActivator';
-import ModelContext from './ModelContext';
+import getModelContext, { ModelContext } from './ModelContext';
 import { ProvidesBindingDom } from '../rendering/BindingDom';
 
 describe('The BindingContext class', () => {
@@ -30,7 +30,7 @@ describe('The BindingContext class', () => {
     });
 
     function getSampleModelContext() : ModelContext {
-        return new ModelContext(1);
+        return getModelContext(1);
     }
 
     function getSampleDom() : ProvidesBindingDom {

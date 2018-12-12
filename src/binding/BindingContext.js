@@ -1,6 +1,6 @@
 //@flow
 import { ProvidesBindingDom } from '../rendering/BindingDom';
-import ModelContext from './ModelContext';
+import getModelContext, { ModelContext } from './ModelContext';
 import BindingDeclaration from './BindingDeclaration';
 
 export default class BindingContext<+TParams : mixed> {
