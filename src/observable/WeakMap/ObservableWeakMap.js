@@ -39,8 +39,8 @@ export class ObservableWeakMap<K,V> implements ProvidesCurrentState<WeakMap<K,V>
         return result;
     }
 
-    constructor(wrapped : WeakMap<K,V>) {
-        this.#wrapped = wrapped;
+    constructor(wrapped? : WeakMap<K,V>) {
+        this.#wrapped = wrapped || new WeakMap();
         this.#valueSubject = new BehaviorSubject(this.#wrapped);
         this.#valueSet = new Subject();
         this.#valueDeleted = new Subject();

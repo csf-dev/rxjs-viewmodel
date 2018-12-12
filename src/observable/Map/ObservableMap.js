@@ -28,6 +28,8 @@ export class ObservableMap<K,V> implements ProvidesCurrentState<Map<K,V>>,
         this.#valueSubject.next(this.#wrapped);
     }
 
+    has(key : K) : bool { return this.#wrapped.has(key); }
+
     clear() : void {
         this.#wrapped.clear();
         this.#valueSubject.next(this.#wrapped);
@@ -45,8 +47,8 @@ export class ObservableMap<K,V> implements ProvidesCurrentState<Map<K,V>>,
         return result;
     }
 
-    constructor(wrapped : Map<K,V>) {
-        this.#wrapped = wrapped;
+    constructor(wrapped? : Map<K,V>) {
+        this.#wrapped = wrapped || new Map();
         this.#valueSubject = new BehaviorSubject(this.#wrapped);
         this.#valueSet = new Subject();
         this.#valueDeleted = new Subject();
