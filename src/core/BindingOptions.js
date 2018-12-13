@@ -7,7 +7,7 @@ import { GetsBindingActivator } from '../GetsBindingActivator';
 
 export const bindingsProvder = 'bindingsProvider';
 export const bindingContextProvider = 'bindingContextProvider';
-export const contextualBindingsProvider = 'contextualBindingsProvider';
+export const activatableBindingsProvider = 'activatableBindingsProvider';
 export const bulkBindingActivator = 'bulkBindingActivator';
 export const bindingActivatorProvider = 'bindingActivatorProvider';
 
@@ -26,8 +26,8 @@ export default class BindingOptions {
         const output : any = this.#options.get(bulkBindingActivator);
         return (output : ActivatesManyBindings) || null;
     }
-    get contextualBindingsProvider() : ?GetsActivatableBindings {
-        const output : any = this.#options.get(contextualBindingsProvider);
+    get activatableBindingsProvider() : ?GetsActivatableBindings {
+        const output : any = this.#options.get(activatableBindingsProvider);
         return (output : GetsActivatableBindings) || null;
     }
 

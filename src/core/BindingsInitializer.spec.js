@@ -12,21 +12,21 @@ describe('The bindings initializer', () => {
     let
         element : HTMLElement,
         bindingsProvider : GetsBindings,
-        contextualBindingProvider : GetsActivatableBindings,
+        activatableBindingsProvider : GetsActivatableBindings,
         bulkActivator : ActivatesManyBindings;
 
 
     beforeEach(function() {
         element = document.createElement('div');
         bindingsProvider = getMockBindingsProvider();
-        contextualBindingProvider = getMockContextualBindingProvider();
+        activatableBindingsProvider = getMockActivatableBindingProvider();
         bulkActivator = getMockBulkBindingActivator();
     });
 
     function getSut() {
         return new BindingsInitializer(element, {
             bindingsProvider: bindingsProvider,
-            contextualBindingsProvider: contextualBindingProvider,
+            activatableBindingsProvider: activatableBindingsProvider,
             bulkBindingActivator: bulkActivator
         });
     }
@@ -44,12 +44,12 @@ describe('The bindings initializer', () => {
         const binding = getMockBinding('foo');
         const bindings = new Map([ [element, [binding] ] ]);
         bindingsProvider = getMockBindingsProvider(bindings);
-        spyOn(contextualBindingProvider, 'getActivatableBindings').and.returnValue([]);
+        spyOn(activatableBindingsProvider, 'getActivatableBindings').and.returnValue([]);
         const sut = getSut();
 
         await sut.initialize({});
 
-        expect(contextualBindingProvider.getActivatableBindings).toHaveBeenCalledWith(bindings);
+        expect(activatableBindingsProvider.getActivatableBindings).toHaveBeenCalledWith(bindings);
     });
 
     it('should activate all of the contextualized bindings', async function() {
@@ -59,7 +59,7 @@ describe('The bindings initializer', () => {
             { binding: binding1, context: null, },
             { binding: binding2, context: null, },
         ];
-        spyOn(contextualBindingProvider, 'getActivatableBindings').and.returnValue(contextualBindings);
+        spyOn(activatableBindingsProvider, 'getActivatableBindings').and.returnValue(contextualBindings);
         spyOn(bulkActivator, 'activateAll').and.returnValue([Promise.resolve()]);
         const sut = getSut();
 
@@ -91,7 +91,7 @@ function getMockBindingsProvider(result? : Map<HTMLElement,Array<BindingDeclarat
     };
 }
 
-function getMockContextualBindingProvider(result? : Array<ActivatableBinding<mixed>>) : GetsActivatableBindings {
+function getMockActivatableBindingProvider(result? : Array<ActivatableBinding<mixed>>) : GetsActivatableBindings {
     const res = result || [];
     return { getActivatableBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) { return Promise.resolve(res); } };
 }

@@ -32,12 +32,12 @@ export default class BindingsInitializer {
         const opts = this.#options;
 
         const bindingsProvider = opts.bindingsProvider || getDefaultBindingsProvider();
-        const contextualBindingsProvider = opts.contextualBindingsProvider || getDefaultContextualBindingsProvider();
+        const activatableBindingsProvider = opts.activatableBindingsProvider || getDefaultContextualBindingsProvider();
         const bulkBindingActivator = opts.bulkBindingActivator || getDefaultBulkBindingActivator();
 
         const bindings = await bindingsProvider.getBindings(this.#element);
-        const contextualBindings = await contextualBindingsProvider.getActivatableBindings(bindings);
-        const activationsCompleted = await activateAll(contextualBindings, bulkBindingActivator);
+        const activatableBindings = await activatableBindingsProvider.getActivatableBindings(bindings);
+        const activationsCompleted = await activateAll(activatableBindings, bulkBindingActivator);
 
         return new LiveBindingsCollection(activationsCompleted);
     }
