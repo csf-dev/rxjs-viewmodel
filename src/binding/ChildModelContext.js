@@ -1,5 +1,5 @@
 //@flow
-import { combineLatest  } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ObservableMap, MapAction, MapReplaceContentsAction } from "rxjs-observable-collections";
 import { ModelContext } from './ModelContext';

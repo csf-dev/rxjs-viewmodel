@@ -1,5 +1,5 @@
 //@flow
-import { ModelContext } from '../binding';
+import { ModelContext } from '../binding/ModelContext';
 import type { ActivatorIdentifier } from '../GetsBindingActivator';
 
 export type BindingDefinition<TParams : mixed> = {

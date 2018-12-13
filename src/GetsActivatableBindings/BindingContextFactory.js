@@ -1,6 +1,7 @@
 //@flow
 import { GetsBindingContext } from './GetsBindingContext';
-import { BindingDeclaration, BindingContext, getModelContext, ModelContext } from '../binding';
+import { BindingDeclaration, BindingContext, getModelContext } from '../binding';
+import { ModelContext } from '../binding/ModelContext';
 import { getDom } from '../rendering';
 
 export class BindingContextFactory implements GetsBindingContext {

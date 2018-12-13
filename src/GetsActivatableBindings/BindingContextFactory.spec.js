@@ -1,6 +1,7 @@
 //@flow
 import { BindingContextFactory } from './BindingContextFactory';
-import { BindingDeclaration, BindingContext, ModelContext, BindingActivator } from '../binding';
+import { BindingDeclaration, BindingContext, BindingActivator } from '../binding';
+import { ModelContext } from '../binding/ModelContext';
 
 describe('The binding context factory.', () => {
     it('should return a promise which resolves to a BindingContext', async () => {
