@@ -12,15 +12,18 @@ module.exports = function(config) {
       return output;
     })(),
     webpack: webpackConfig,
-    reporters: ['progress'],
+    reporters: ['spec'],
     port: 9876,
     colors: true,
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_WARN,
     autoWatch: true,
     browsers: ['PhantomJS'],
     phantomjsLauncher: { exitOnResourceError: true },
     singleRun: true,
-    concurrency: Infinity
+    concurrency: Infinity,
+    specReporter: {
+        suppressSkipped: false,
+        suppressPassed: true
+    },
   });
 }
