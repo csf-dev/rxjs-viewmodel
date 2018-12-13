@@ -4,7 +4,7 @@ import { GetsActivatableBindings } from '../GetsActivatableBindings';
 import { GetsBindingContext } from '../GetsActivatableBindings/GetsBindingContext';
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
 import type { ActivatableBinding } from '../binding';
-import { LiveBinding, BindingDeclaration, BindingContext, ModelContext, BindingActivator } from '../binding';
+import { LiveBinding, BindingDeclaration, BindingContext, BindingActivator } from '../binding';
 import { getDom } from '../rendering';
 import BindingsInitializer from './BindingsInitializer';
 

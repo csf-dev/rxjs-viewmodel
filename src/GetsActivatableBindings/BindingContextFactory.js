@@ -1,6 +1,7 @@
 //@flow
 import { GetsBindingContext } from './GetsBindingContext';
-import { BindingDeclaration, BindingContext, ModelContext } from '../binding';
+import { BindingDeclaration, BindingContext, getModelContext } from '../binding';
+import { ModelContext } from '../binding/ModelContext';
 import { getDom } from '../rendering';
 
 export class BindingContextFactory implements GetsBindingContext {
@@ -24,8 +25,8 @@ export class BindingContextFactory implements GetsBindingContext {
 }
 
 function getModel(parentContext : ?Promise<BindingContext<mixed>>, vmRoot : mixed) : Promise<ModelContext> {
-    if(!parentContext) return Promise.resolve(new ModelContext(vmRoot));
-    return parentContext.then(parent => Promise.resolve(parent.model.getChild()));
+    if(!parentContext) return Promise.resolve(getModelContext(vmRoot));
+    return parentContext.then(parent => Promise.resolve(parent.model.createChild()));
 }
 
 function getParameters<T>(binding : BindingDeclaration<T>,

@@ -1,29 +1,24 @@
 //@flow
+import { MapAction } from "rxjs-observable-collections";
+import { RootModelContext } from './RootModelContext';
 
-export default class ModelContext {
-    #root : mixed;
-    #valueMap : Map<string,mixed>;
+export interface ModelContext {
+    +keys : Iterator<string>;
+    +observableKeys : rxjs$Observable<Array<string>>;
 
-    getRoot<T>() : T { return (this.#root : any); }
-    get<T>(key : string) : ?T {
-        if(!this.#valueMap.has(key)) return undefined;
-        return (this.#valueMap.get(key) : any);
-    }
-    getKeys() : Array<string> { return Array.from(this.#valueMap.keys()); }
-    set(key : string, value : mixed) : void { this.#valueMap.set(key, value); }
-    getChild() : ModelContext {
-        const child = new ModelContext(this.#root);
-        this.#valueMap.forEach((val, key, map) => child.set(key, val));
-        return child;
-    }
-    getAll() : {} {
-        const output = {};
-        this.#valueMap.forEach((val, key) => output[key] = val);
-        return output;
-    }
+    getViewModel<T : mixed>() : T;
 
-    constructor(root : mixed) {
-        this.#root = root;
-        this.#valueMap = new Map();
-    }
+    get<T : mixed>(key : string) : ?T;
+    getObservable<T : mixed>(key : string) : rxjs$Observable<?T>;
+
+    getAll() : Map<string,mixed>;
+    getAllObservable() : rxjs$Observable<MapAction<string,mixed>>;
+
+    set(key : string, value : mixed) : void;
+
+    createChild() : ModelContext;
+}
+
+export default function getModelContext(viewModel : mixed) : ModelContext {
+    return new RootModelContext(viewModel);
 }

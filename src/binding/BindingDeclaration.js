@@ -1,6 +1,6 @@
 //@flow
 import { BindingActivator } from './BindingActivator';
-import ModelContext from './ModelContext';
+import { ModelContext } from './ModelContext';
 
 export default class BindingDeclaration<+TParams : mixed> {
     #activator : BindingActivator<TParams>;
