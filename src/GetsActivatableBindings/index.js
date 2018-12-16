@@ -1,9 +1,9 @@
 //@flow
 import { BindingDeclaration, BindingContext } from '../binding';
-import type { ActivatableBinding } from '../binding';
+import type { ActivatableBinding, ElementsWithBindingDeclarations } from '../binding';
 
 export interface GetsActivatableBindings {
-    getActivatableBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Promise<Array<ActivatableBinding<mixed>>>;
+    getActivatableBindings(bindings : ElementsWithBindingDeclarations) : Promise<Array<ActivatableBinding<mixed>>>;
 }
 
 export { default as getActivatableBindingsProvider } from './ActivatableBindingsProvider';

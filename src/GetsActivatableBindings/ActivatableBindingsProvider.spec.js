@@ -5,8 +5,8 @@ import { ActivatableBindingsProvider } from './ActivatableBindingsProvider';
 import { BindingActivator, BindingDeclaration, BindingContext } from '../binding';
 import type { ActivatableBinding } from '../binding';
 
-describe('The contextual bindings provider', () => {
-    it('should return an array of contextual bindings pointing to the correct bindings, across multiple elements', async () => {
+describe('The activatable bindings provider', () => {
+    it('should return an array of activatable bindings pointing to the correct source bindings, across multiple elements', async () => {
         const bindingContextFactory = getMockBindingContextFactory();
         spyOn(bindingContextFactory, 'getContext').and.returnValue(Promise.resolve(null));
 
@@ -16,10 +16,10 @@ describe('The contextual bindings provider', () => {
         const element2Binding1 = getBinding();
         const element2Binding2 = getBinding();
 
-        const elementsAndBindings = new Map([
-            [ element1, [ element1Binding1 ] ],
-            [ element2, [ element2Binding1, element2Binding2 ] ]
-        ]);
+        const elementsAndBindings = [
+            { element: element1, bindings: [ element1Binding1 ] },
+            { element: element2, bindings: [ element2Binding1, element2Binding2 ] }
+        ];
 
         const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
@@ -28,17 +28,17 @@ describe('The contextual bindings provider', () => {
         expect(result.map(item => item.binding)).toEqual([element1Binding1, element2Binding1, element2Binding2]);
     });
 
-    it('should return an array of contextual bindings pointing to the correct context, across multiple elements', async () => {
+    it('should return an array of activatable bindings pointing to the correct context, across multiple elements', async () => {
         const element1 = getElement();
         const element2 = getElement();
         const element1Binding1 = getBinding();
         const element2Binding1 = getBinding();
         const element2Binding2 = getBinding();
 
-        const elementsAndBindings = new Map([
-            [ element1, [ element1Binding1 ] ],
-            [ element2, [ element2Binding1, element2Binding2 ] ]
-        ]);
+        const elementsAndBindings = [
+            { element: element1, bindings: [ element1Binding1 ] },
+            { element: element2, bindings: [ element2Binding1, element2Binding2 ] }
+        ];
 
         const
             context1 = { name: 'Context 1' },

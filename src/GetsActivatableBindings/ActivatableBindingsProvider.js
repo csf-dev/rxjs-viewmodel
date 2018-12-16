@@ -2,16 +2,16 @@
 import { GetsActivatableBindings } from './index';
 import { GetsBindingContext } from './GetsBindingContext';
 import { BindingDeclaration } from '../binding';
-import type { ActivatableBinding } from '../binding';
+import type { ActivatableBinding, ElementsWithBindingDeclarations } from '../binding';
+import type { ElementBinding } from '../GetsBindings';
 import BindingOptions from '../core/BindingOptions';
 
 export class ActivatableBindingsProvider implements GetsActivatableBindings {
     #contextFactory : GetsBindingContext;
 
-    getActivatableBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Promise<Array<ActivatableBinding<mixed>>> {
-        const entries = Array.from(bindings.entries());
+    getActivatableBindings(bindings : ElementsWithBindingDeclarations) : Promise<Array<ActivatableBinding<mixed>>> {
         const reducer = getBindingDeclarationReducer(this.#contextFactory);
-        const bindingPromises = entries.reduce(reducer, []);
+        const bindingPromises = bindings.reduce(reducer, []);
         return Promise.all(bindingPromises);
     }
 
@@ -27,12 +27,12 @@ export default function getActivatableBindingsProvider(options : BindingOptions)
 
 function getBindingDeclarationReducer(contextFactory : GetsBindingContext) {
     return function (accumulator : Array<Promise<ActivatableBinding<mixed>>>,
-                     item : [HTMLElement, Array<BindingDeclaration<mixed>>]) : Array<Promise<ActivatableBinding<mixed>>> {
-        const [ element, elementBindings ] = item;
+                     item : ElementBinding) : Array<Promise<ActivatableBinding<mixed>>> {
+        const { element, bindings } = item;
 
-        const activatableBindings = elementBindings
+        const activatableBindings = bindings
             .map(binding => {
-                return contextFactory.getContext(element, binding, elementBindings)
+                return contextFactory.getContext(element, binding, bindings)
                     .then((context) : Promise<ActivatableBinding<mixed>> => Promise.resolve({ binding, context }));
             });
 

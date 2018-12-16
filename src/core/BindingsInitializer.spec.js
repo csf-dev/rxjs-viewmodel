@@ -3,7 +3,7 @@ import { GetsBindings } from '../GetsBindings';
 import { GetsActivatableBindings } from '../GetsActivatableBindings';
 import { GetsBindingContext } from '../GetsActivatableBindings/GetsBindingContext';
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
-import type { ActivatableBinding } from '../binding';
+import type { ActivatableBinding, ElementsWithBindingDeclarations } from '../binding';
 import { LiveBinding, BindingDeclaration, BindingContext, BindingActivator } from '../binding';
 import { getDom } from '../rendering';
 import BindingsInitializer from './BindingsInitializer';
@@ -40,16 +40,16 @@ describe('The bindings initializer', () => {
         expect(bindingsProvider.getBindings).toHaveBeenCalledWith(element);
     });
 
-    it('should contextualize the created bindings using the configured provider', async function() {
+    it('should get activatable bindings the source bindings using the configured provider', async function() {
         const binding = getMockBinding('foo');
-        const bindings = new Map([ [element, [binding] ] ]);
-        bindingsProvider = getMockBindingsProvider(bindings);
+        const sourceBindings = [ { element, bindings: [binding] } ];
+        bindingsProvider = getMockBindingsProvider(sourceBindings);
         spyOn(activatableBindingsProvider, 'getActivatableBindings').and.returnValue([]);
         const sut = getSut();
 
         await sut.initialize({});
 
-        expect(activatableBindingsProvider.getActivatableBindings).toHaveBeenCalledWith(bindings);
+        expect(activatableBindingsProvider.getActivatableBindings).toHaveBeenCalledWith(sourceBindings);
     });
 
     it('should activate all of the contextualized bindings', async function() {
@@ -78,8 +78,8 @@ describe('The bindings initializer', () => {
     });
 });
 
-function getMockBindingsProvider(result? : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : GetsBindings {
-    const res = result || new Map();
+function getMockBindingsProvider(result? : ElementsWithBindingDeclarations) : GetsBindings {
+    const res : ElementsWithBindingDeclarations = result || [];
     return {
         getBindings(element : HTMLElement) {
             return new Promise((resolve, reject) => {
@@ -93,7 +93,7 @@ function getMockBindingsProvider(result? : Map<HTMLElement,Array<BindingDeclarat
 
 function getMockActivatableBindingProvider(result? : Array<ActivatableBinding<mixed>>) : GetsActivatableBindings {
     const res = result || [];
-    return { getActivatableBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) { return Promise.resolve(res); } };
+    return { getActivatableBindings(bindings : ElementsWithBindingDeclarations) { return Promise.resolve(res); } };
 }
 
 function getMockBulkBindingActivator(result? : Array<Promise<LiveBinding<mixed>>>) : ActivatesManyBindings {
