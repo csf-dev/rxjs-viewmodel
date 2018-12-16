@@ -6,6 +6,7 @@ import type { ActivatableBinding, ElementsWithBindingDeclarations } from '../bin
 import type { ElementBinding } from '../GetsBindings';
 import BindingOptions from '../core/BindingOptions';
 import getModelContext, { ModelContext } from '../binding/ModelContext';
+import { ModelContextCache } from './ModelContextCache';
 
 export class ActivatableBindingsProvider implements GetsActivatableBindings {
     #bindingContextFactory : GetsBindingContext;
@@ -28,25 +29,12 @@ export default function getActivatableBindingsProvider(options : BindingOptions)
 }
 
 function getBindingDeclarationReducer(contextFactory : GetsBindingContext, rootModelContext : ModelContext) {
-    const elementsAndModelsAlreadySeen = new Map<HTMLElement,ModelContext>();
-
-    function getModelContext(element : HTMLElement) : ModelContext {
-        if(!elementsAndModelsAlreadySeen.has(element)) {
-            const parentElement : HTMLElement = (element.parentElement : any);
-            const parentModel = elementsAndModelsAlreadySeen.get(parentElement);
-            const model = parentModel? parentModel.createChild() : rootModelContext;
-
-            elementsAndModelsAlreadySeen.set(element, model);
-        }
-
-        // This cast is safe because we have ensured that the context is in the map
-        return (elementsAndModelsAlreadySeen.get(element) : any);
-    }
+    const modelsCache = new ModelContextCache(rootModelContext);
 
     return function (accumulator : Array<Promise<ActivatableBinding<mixed>>>,
                      item : ElementBinding) : Array<Promise<ActivatableBinding<mixed>>> {
         const { element, bindings } = item;
-        const model = getModelContext(element);
+        const model = modelsCache.getModel(element);
 
         const activatableBindings = bindings
             .map(binding => {
