@@ -1,9 +1,10 @@
 //@flow
 import { BindingDeclaration, BindingContext } from '../binding';
+import { ModelContext } from '../binding/ModelContext';
 
 export interface GetsBindingContext {
     getContext<T : mixed>(element : HTMLElement,
                           binding : BindingDeclaration<T>,
                           allBindings : Array<BindingDeclaration<mixed>>,
-                          parentContext? : Promise<BindingContext<mixed>>) : Promise<BindingContext<?T>>;
+                          modelContext : ModelContext) : BindingContext<?T>;
 }

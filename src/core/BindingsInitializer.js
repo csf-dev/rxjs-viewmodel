@@ -36,7 +36,7 @@ export default class BindingsInitializer {
         const bulkBindingActivator = opts.bulkBindingActivator || getDefaultBulkBindingActivator();
 
         const bindings = await bindingsProvider.getBindings(this.#element);
-        const activatableBindings = await activatableBindingsProvider.getActivatableBindings(bindings);
+        const activatableBindings = await activatableBindingsProvider.getActivatableBindings(bindings, viewModel);
         const activationsCompleted = await activateAll(activatableBindings, bulkBindingActivator);
 
         return new LiveBindingsCollection(activationsCompleted);

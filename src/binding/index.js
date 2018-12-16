@@ -6,3 +6,4 @@ export { default as LiveBinding } from './LiveBinding';
 export { default as LiveBindingsCollection } from './LiveBindingsCollection';
 export type { BindingActivator } from './BindingActivator';
 export type { ActivatableBinding } from './ActivatableBinding';
+export type { ElementsWithBindingDeclarations} from './ElementsWithBindingDeclarations';

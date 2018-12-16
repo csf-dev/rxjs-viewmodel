@@ -1,22 +1,25 @@
 //@flow
 import { GetsActivatableBindings } from './index';
 import { GetsBindingContext } from './GetsBindingContext';
-import { BindingDeclaration } from '../binding';
-import type { ActivatableBinding } from '../binding';
+import { BindingDeclaration, BindingContext } from '../binding';
+import type { ActivatableBinding, ElementsWithBindingDeclarations } from '../binding';
+import type { ElementBinding } from '../GetsBindings';
 import BindingOptions from '../core/BindingOptions';
+import getModelContext, { ModelContext } from '../binding/ModelContext';
+import { ModelContextCache } from './ModelContextCache';
 
 export class ActivatableBindingsProvider implements GetsActivatableBindings {
-    #contextFactory : GetsBindingContext;
+    #bindingContextFactory : GetsBindingContext;
 
-    getActivatableBindings(bindings : Map<HTMLElement,Array<BindingDeclaration<mixed>>>) : Promise<Array<ActivatableBinding<mixed>>> {
-        const entries = Array.from(bindings.entries());
-        const reducer = getBindingDeclarationReducer(this.#contextFactory);
-        const bindingPromises = entries.reduce(reducer, []);
+    getActivatableBindings(bindings : ElementsWithBindingDeclarations, viewModel : mixed) : Promise<Array<ActivatableBinding<mixed>>> {
+        const rootModelContext = getModelContext(viewModel);
+        const reducer = getBindingDeclarationReducer(this.#bindingContextFactory, rootModelContext);
+        const bindingPromises = bindings.reduce(reducer, []);
         return Promise.all(bindingPromises);
     }
 
-    constructor(contextFactory : GetsBindingContext) {
-        this.#contextFactory  = contextFactory;
+    constructor(bindingContextFactory : GetsBindingContext) {
+        this.#bindingContextFactory  = bindingContextFactory;
     }
 }
 
@@ -25,15 +28,18 @@ export default function getActivatableBindingsProvider(options : BindingOptions)
     return new ActivatableBindingsProvider(options.bindingContextProvider);
 }
 
-function getBindingDeclarationReducer(contextFactory : GetsBindingContext) {
-    return function (accumulator : Array<Promise<ActivatableBinding<mixed>>>,
-                     item : [HTMLElement, Array<BindingDeclaration<mixed>>]) : Array<Promise<ActivatableBinding<mixed>>> {
-        const [ element, elementBindings ] = item;
+function getBindingDeclarationReducer(contextFactory : GetsBindingContext, rootModelContext : ModelContext) {
+    const modelsCache = new ModelContextCache(rootModelContext);
 
-        const activatableBindings = elementBindings
+    return function (accumulator : Array<Promise<ActivatableBinding<mixed>>>,
+                     item : ElementBinding) : Array<Promise<ActivatableBinding<mixed>>> {
+        const { element, bindings } = item;
+        const model = modelsCache.getModel(element);
+
+        const activatableBindings = bindings
             .map(binding => {
-                return contextFactory.getContext(element, binding, elementBindings)
-                    .then((context) : Promise<ActivatableBinding<mixed>> => Promise.resolve({ binding, context }));
+                const context = contextFactory.getContext(element, binding, bindings, model);
+                return Promise.resolve({ binding, context });
             });
 
         accumulator.push(...activatableBindings);
