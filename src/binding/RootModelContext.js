@@ -16,12 +16,12 @@ export class RootModelContext implements ModelContext {
             .pipe(map(action => Array.from(action.map.keys())));
     }
 
-    getViewModel<T : mixed>() : T { return (this.#viewModel : any); }
+    getVm<T : mixed>() : T { return (this.#viewModel : any); }
 
-    get<T : mixed>(key : string) : ?T {
+    getOnce<T : mixed>(key : string) : ?T {
         return (this.#variables.get(key) : any);
     }
-    getObservable<T : mixed>(key : string) : rxjs$Observable<?T> {
+    get<T : mixed>(key : string) : rxjs$Observable<?T> {
         return this.#variables
             .actions
             .pipe(map(action => {
@@ -30,10 +30,10 @@ export class RootModelContext implements ModelContext {
             }));
     }
 
-    getAll() : Map<string,mixed> {
+    getAllOnce() : Map<string,mixed> {
         return new Map(this.#variables.entries());
     }
-    getAllObservable() : rxjs$Observable<MapAction<string,mixed>> {
+    getAll() : rxjs$Observable<MapAction<string,mixed>> {
         return this.#variables.actions;
     }
 
@@ -45,6 +45,6 @@ export class RootModelContext implements ModelContext {
 
     constructor(viewModel : mixed) {
         this.#viewModel = viewModel;
-        this.#variables = new ObservableMap<string,mixed>();
+        this.#variables = new ObservableMap<string,mixed>([['vm', viewModel]]);
     }
 }

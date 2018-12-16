@@ -3,33 +3,42 @@ import getModelContext, { ModelContext } from './ModelContext';
 
 describe('The ModelContext class', () => {
     let sut : ModelContext;
+    const vm = { number: 5, obj: { foo: 'bar' } };
 
     beforeEach(() => {
-        sut = getModelContext({ number: 5, obj: { foo: 'bar' } });
+        sut = getModelContext(vm);
     });
 
     describe('when setting & getting variables', () => {
         it('should be able to set and get a number', () => {
             sut.set('key', 5);
-            const result = sut.get<number>('key');
+            const result = sut.getOnce<number>('key');
             expect(result).toBe(5);
         });
 
         it('should be able to set and get a string', () => {
             sut.set('key', 'My string');
-            const result = sut.get<string>('key');
+            const result = sut.getOnce<string>('key');
             expect(result).toBe('My string');
         });
 
         it('should be able to get a number unsafely', () => {
             sut.set('key', 'My string');
-            const result = sut.get<number>('key');
+            const result = sut.getOnce<number>('key');
             expect(typeof result).toBe('string');
         });
 
         it('should return undefined for variables which do not exist', () => {
-            const result = sut.get('key');
+            const result = sut.getOnce('key');
             expect(result).toBeUndefined();
+        });
+    });
+
+    describe('when creating a child context', () => {
+        it('should store the VM in a variable named "vm"', () => {
+            const result = sut.getOnce('vm');
+
+            expect(result).toBe(vm);
         });
     });
 
@@ -40,8 +49,8 @@ describe('The ModelContext class', () => {
 
             const result = sut.createChild();
 
-            expect(result.get('key1')).toBe(5);
-            expect(result.get('key2')).toBe(6);
+            expect(result.getOnce('key1')).toBe(5);
+            expect(result.getOnce('key2')).toBe(6);
         });
 
         it('should create a child which receives changes made to the parent', () => {
@@ -49,7 +58,7 @@ describe('The ModelContext class', () => {
 
             sut.set('key3', 7)
 
-            expect(child.get('key3')).toBe(7);
+            expect(child.getOnce('key3')).toBe(7);
         });
 
         it('should create a child which may shadow values in its parent', () => {
@@ -58,7 +67,7 @@ describe('The ModelContext class', () => {
             child.set('key3', 8);
             sut.set('key3', 7)
 
-            expect(child.get('key3')).toBe(8);
+            expect(child.getOnce('key3')).toBe(8);
         });
 
         it('should not be able to redefine variables present upon its parent', () => {
@@ -67,7 +76,7 @@ describe('The ModelContext class', () => {
             sut.set('key2', 6);
             child.set('key2', 7)
 
-            expect(sut.get('key2')).toBe(6);
+            expect(sut.getOnce('key2')).toBe(6);
         });
     });
 
@@ -76,7 +85,7 @@ describe('The ModelContext class', () => {
             let fromSub : number;
             sut.set('key1', 5);
 
-            const sub = sut.getObservable<number>('key1')
+            const sub = sut.get<number>('key1')
                 .subscribe(val => fromSub = val);
 
             expect(fromSub).toBe(5);
@@ -85,7 +94,7 @@ describe('The ModelContext class', () => {
         it('should be undefined if no value has been set', () => {
             let fromSub : ?number;
 
-            const sub = sut.getObservable<number>('key1')
+            const sub = sut.get<number>('key1')
                 .subscribe(val => fromSub = val);
 
             expect(fromSub).toBeUndefined();
@@ -94,7 +103,7 @@ describe('The ModelContext class', () => {
 
         it('should emit an ongoing stream of values', () => {
             const fromSub : Array<number> = [];
-            const sub = sut.getObservable<number>('key1')
+            const sub = sut.get<number>('key1')
                 .subscribe(val => fromSub.push(val));
 
             sut.set('key1', 3);
@@ -108,7 +117,7 @@ describe('The ModelContext class', () => {
         it('should not emit values overridden in a parent context', () => {
             const fromSub : Array<number> = [];
             const child = sut.createChild();
-            const sub = child.getObservable<number>('key1')
+            const sub = child.get<number>('key1')
                 .subscribe(val => fromSub.push(val));
 
             child.set('key1', 3);
@@ -121,7 +130,7 @@ describe('The ModelContext class', () => {
         xit('should not emit unnecesary values due to irrelevant changes in an overridden parent context', () => {
             const fromSub : Array<number> = [];
             const child = sut.createChild();
-            const sub = child.getObservable<number>('key1')
+            const sub = child.get<number>('key1')
                 .subscribe(val => fromSub.push(val));
 
             child.set('key1', 3);
@@ -134,22 +143,22 @@ describe('The ModelContext class', () => {
     });
 
     describe('when getting all values as an observable', () => {
-        it('should emit an ongoing stream of values', () => {
+        it('should emit an ongoing stream of values with the correct number of entries', () => {
             const fromSub : Array<number> = [];
-            const sub = sut.getAllObservable()
+            const sub = sut.getAll()
                 .subscribe(val => fromSub.push(val.map.size));
 
             sut.set('key1', 3);
             sut.set('key2', 4);
             sut.set('key3', 5);
 
-            expect(fromSub).toEqual([0, 1, 2, 3]);
+            expect(fromSub).toEqual([1, 2, 3, 4]);
             sub.unsubscribe();
         });
 
-        it('should emit an ongoing stream of values', () => {
+        it('should emit an ongoing stream of values with the correct contents', () => {
             const fromSub : Array<Map<string,number>> = [];
-            const sub = sut.getAllObservable()
+            const sub = sut.getAll()
                 .subscribe(val => fromSub.push(new Map<string,number>(val.map.entries())));
 
             sut.set('key1', 3);
@@ -157,10 +166,10 @@ describe('The ModelContext class', () => {
             sut.set('key3', 5);
 
             expect(fromSub).toEqual([
-                new Map(),
-                new Map([['key1', 3]]),
-                new Map([['key1', 3], ['key2', 4]]),
-                new Map([['key1', 3], ['key2', 4], ['key3', 5]]),
+                new Map([['vm', vm]]),
+                new Map([['vm', vm], ['key1', 3]]),
+                new Map([['vm', vm], ['key1', 3], ['key2', 4]]),
+                new Map([['vm', vm], ['key1', 3], ['key2', 4], ['key3', 5]]),
             ]);
             sub.unsubscribe();
         });
@@ -168,20 +177,20 @@ describe('The ModelContext class', () => {
         it('should not emit values overridden in a parent context', () => {
             const fromSub : Array<Map<string,number>> = [];
             const child = sut.createChild();
-            const sub = child.getAllObservable()
+            const sub = child.getAll()
                 .subscribe(val => fromSub.push(new Map<string,number>(val.map.entries())));
 
             child.set('key1', 3);
             sut.set('key1', 4);
 
-            expect(fromSub.reverse()[0]).toEqual(new Map([['key1', 3]]));
+            expect(fromSub.reverse()[0]).toEqual(new Map([['vm', vm], ['key1', 3]]));
             sub.unsubscribe();
         });
 
         xit('should not emit unnecesary values due to irrelevant changes in an overridden parent context', () => {
             const fromSub : Array<Map<string,number>> = [];
             const child = sut.createChild();
-            const sub = child.getAllObservable()
+            const sub = child.getAll()
                 .subscribe(val => fromSub.push(new Map<string,number>(val.map.entries())));
 
             child.set('key1', 3);

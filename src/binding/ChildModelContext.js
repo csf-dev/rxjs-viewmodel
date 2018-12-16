@@ -9,21 +9,21 @@ export class ChildModelContext implements ModelContext {
     #variables : ObservableMap<string,mixed>;
 
     get keys() : Iterator<string> {
-        return this.getAll().keys();
+        return this.getAllOnce().keys();
     };
 
     get observableKeys() : rxjs$Observable<Array<string>> {
-        return this.getAllObservable().pipe(map(action => Array.from(action.map.keys())));
+        return this.getAll().pipe(map(action => Array.from(action.map.keys())));
     }
 
-    getViewModel<T : mixed>() : T { return this.#parent.getViewModel<T>(); }
+    getVm<T : mixed>() : T { return this.#parent.getVm<T>(); }
 
-    get<T : mixed>(key : string) : ?T {
-        return (this.getAll().get(key) : any);
+    getOnce<T : mixed>(key : string) : ?T {
+        return (this.getAllOnce().get(key) : any);
     }
 
-    getAll() : Map<string,mixed> {
-        const output = new Map<string,mixed>(this.#parent.getAll());
+    getAllOnce() : Map<string,mixed> {
+        const output = new Map<string,mixed>(this.#parent.getAllOnce());
 
         for (const kvp of this.#variables.entries())
             output.set(kvp[0], kvp[1]);
@@ -31,11 +31,11 @@ export class ChildModelContext implements ModelContext {
         return output;
     }
 
-    getObservable<T : mixed>(key : string) : rxjs$Observable<?T> {
-        return this.getAllObservable().pipe(map(action => (action.map.get(key) : any)));
+    get<T : mixed>(key : string) : rxjs$Observable<?T> {
+        return this.getAll().pipe(map(action => (action.map.get(key) : any)));
     }
-    getAllObservable() : rxjs$Observable<MapAction<string,mixed>> {
-        const parentObservable = this.#parent.getAllObservable();
+    getAll() : rxjs$Observable<MapAction<string,mixed>> {
+        const parentObservable = this.#parent.getAll();
         const thisObservable = this.#variables.actions;
         return combineLatest(parentObservable, thisObservable).pipe(map(getCombinedMap));
     }

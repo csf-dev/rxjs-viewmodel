@@ -14,7 +14,7 @@ describe('The binding context factory.', () => {
 
     it('should return a promise which resolves to a BindingContext', async () => {
         const result = await sut.getContext(getElement(),
-                                            getBinding(ctx => ctx.getViewModel<{myNumber:number}>().myNumber),
+                                            getBinding(ctx => ctx.getVm<{myNumber:number}>().myNumber),
                                             [],
                                             model);
 
@@ -23,7 +23,7 @@ describe('The binding context factory.', () => {
 
     it('should expose the correct parameters value in the returned binding context', async () => {
         const result = await sut.getContext(getElement(),
-                                            getBinding(ctx => ctx.getViewModel<{myNumber:number}>().myNumber + 1),
+                                            getBinding(ctx => ctx.getVm<{myNumber:number}>().myNumber + 1),
                                             [],
                                             model);
 
@@ -33,7 +33,7 @@ describe('The binding context factory.', () => {
     it('should be able to read parameters from the model context', async () => {
         model.set('num', 22);
         const result = await sut.getContext(getElement(),
-                                            getBinding(ctx => ctx.get('num') || 0),
+                                            getBinding(ctx => ctx.getOnce('num') || 0),
                                             [],
                                             model);
 
@@ -54,7 +54,7 @@ describe('The binding context factory.', () => {
         const otherBinding = getBinding(x => 1);
         const allBindings = [ otherBinding ];
         const result = await sut.getContext(getElement(),
-                                            getBinding(ctx => ctx.get('num') || 0),
+                                            getBinding(ctx => ctx.getOnce('num') || 0),
                                             allBindings,
                                             model);
 

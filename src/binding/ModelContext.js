@@ -6,13 +6,13 @@ export interface ModelContext {
     +keys : Iterator<string>;
     +observableKeys : rxjs$Observable<Array<string>>;
 
-    getViewModel<T : mixed>() : T;
+    getVm<T : mixed>() : T;
 
-    get<T : mixed>(key : string) : ?T;
-    getObservable<T : mixed>(key : string) : rxjs$Observable<?T>;
+    getOnce<T : mixed>(key : string) : ?T;
+    get<T : mixed>(key : string) : rxjs$Observable<?T>;
 
-    getAll() : Map<string,mixed>;
-    getAllObservable() : rxjs$Observable<MapAction<string,mixed>>;
+    getAllOnce() : Map<string,mixed>;
+    getAll() : rxjs$Observable<MapAction<string,mixed>>;
 
     set(key : string, value : mixed) : void;
 
