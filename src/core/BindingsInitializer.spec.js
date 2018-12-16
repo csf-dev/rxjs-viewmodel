@@ -40,16 +40,17 @@ describe('The bindings initializer', () => {
         expect(bindingsProvider.getBindings).toHaveBeenCalledWith(element);
     });
 
-    it('should get activatable bindings the source bindings using the configured provider', async function() {
+    it('should get activatable bindings from the source bindings using the configured provider', async function() {
         const binding = getMockBinding('foo');
         const sourceBindings = [ { element, bindings: [binding] } ];
         bindingsProvider = getMockBindingsProvider(sourceBindings);
         spyOn(activatableBindingsProvider, 'getActivatableBindings').and.returnValue([]);
         const sut = getSut();
+        const vm = {};
 
-        await sut.initialize({});
+        await sut.initialize(vm);
 
-        expect(activatableBindingsProvider.getActivatableBindings).toHaveBeenCalledWith(sourceBindings);
+        expect(activatableBindingsProvider.getActivatableBindings).toHaveBeenCalledWith(sourceBindings, vm);
     });
 
     it('should activate all of the contextualized bindings', async function() {
@@ -93,7 +94,7 @@ function getMockBindingsProvider(result? : ElementsWithBindingDeclarations) : Ge
 
 function getMockActivatableBindingProvider(result? : Array<ActivatableBinding<mixed>>) : GetsActivatableBindings {
     const res = result || [];
-    return { getActivatableBindings(bindings : ElementsWithBindingDeclarations) { return Promise.resolve(res); } };
+    return { getActivatableBindings(bindings : ElementsWithBindingDeclarations, vm : mixed) { return Promise.resolve(res); } };
 }
 
 function getMockBulkBindingActivator(result? : Array<Promise<LiveBinding<mixed>>>) : ActivatesManyBindings {
