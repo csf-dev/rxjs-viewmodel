@@ -7,15 +7,15 @@ import { ModelContext } from './ModelContext';
 export class ChildModelContext implements ModelContext {
     #parent : ModelContext;
     #variables : ObservableMap<string,mixed>;
+    #allKeysObservable : rxjs$Observable<Array<string>>;
+    #allItemsObservable : rxjs$Observable<MapAction<string,mixed>>;
+    #keyedObservables : Map<string,rxjs$Observable<mixed>>;
 
     get keys() : Iterator<string> {
         return this.getAllOnce().keys();
     };
 
-    get observableKeys() : rxjs$Observable<Array<string>> {
-        return this.getAll()
-            .pipe(map(action => Array.from(action.map.keys())));
-    }
+    get observableKeys() : rxjs$Observable<Array<string>> { return this.#allKeysObservable; }
 
     getVm<T : mixed>() : T { return this.#parent.getVm<T>(); }
 
@@ -33,38 +33,38 @@ export class ChildModelContext implements ModelContext {
     }
 
     get<T : mixed>(key : string) : rxjs$Observable<?T> {
-        const valuesInThisContext = this.#variables
-            .actions
-            .pipe(filter(action => {
-                if (action instanceof MapDeleteAction)
-                    return action.key === key;
-                if (action instanceof MapSetAction)
-                    return action.key === key;
-                return true;
-            }))
-            .pipe(map(action => {
-                const value = action.map.get(key);
-                return ((value : any) : ?T);
-            }));
-        
-        const valuesInParentContext = this.#parent.get<T>(key)
-            .pipe(withLatestFrom(valuesInThisContext))
-            .pipe(filter(actions => actions[1] === undefined))
-            .pipe(map((actions : [?T,?T]) => actions[0]));
+        if(!this.#keyedObservables.has(key)) {
+            const valuesInThisContext = this.#variables
+                .actions
+                .pipe(filter(action => {
+                    if (action instanceof MapDeleteAction)
+                        return action.key === key;
+                    if (action instanceof MapSetAction)
+                        return action.key === key;
+                    return true;
+                }))
+                .pipe(map(action => {
+                    const value = action.map.get(key);
+                    return ((value : any) : ?T);
+                }));
+            
+            const valuesInParentContext = this.#parent.get<T>(key)
+                .pipe(withLatestFrom(valuesInThisContext))
+                .pipe(filter(actions => actions[1] === undefined))
+                .pipe(map((actions : [?T,?T]) => actions[0]));
 
-        return combineLatest(valuesInThisContext, valuesInParentContext)
-            .pipe(map(actions => {
-                const output = (actions[0] !== undefined)? actions[0] : actions[1];
-                return (output : any);
-            }));
+            const observable = combineLatest(valuesInThisContext, valuesInParentContext)
+                .pipe(map(actions => {
+                    const output = (actions[0] !== undefined)? actions[0] : actions[1];
+                    return (output : any);
+                }));
+            
+            this.#keyedObservables.set(key, observable);
+        }
+
+        return (this.#keyedObservables.get(key) : any);
     }
-    getAll() : rxjs$Observable<MapAction<string,mixed>> {
-        const parentObservable = this.#parent.getAll();
-        const thisObservable = this.#variables.actions;
-        return combineLatest(parentObservable, thisObservable)
-            .pipe(filter(disregardOverridenParentItems))
-            .pipe(map(getCombinedMap));
-    }
+    getAll() : rxjs$Observable<MapAction<string,mixed>> { return this.#allItemsObservable; }
 
     set(key : string, value : mixed) : void {
         this.#variables.set(key, value);
@@ -75,10 +75,23 @@ export class ChildModelContext implements ModelContext {
     constructor(parent : ModelContext) {
         this.#parent = parent;
         this.#variables = new ObservableMap<string,mixed>();
+
+        this.#allItemsObservable = getAllItemsObservable(this.#parent.getAll(), this.#variables.actions);
+        this.#allKeysObservable = this.#allItemsObservable
+            .pipe(map(action => Array.from(action.map.keys())));
+
+        this.#keyedObservables = new Map<string,rxjs$Observable<mixed>>();
     }
 }
 
 type TwoMapActionStreams = [MapAction<string,mixed>,MapAction<string,mixed>];
+type ActionStream = rxjs$Observable<MapAction<string,mixed>>;
+
+function getAllItemsObservable(parentStream : ActionStream, thisStream : ActionStream) {
+    return combineLatest(parentStream, thisStream)
+        .pipe(filter(disregardOverridenParentItems))
+        .pipe(map(getCombinedMap));
+}
 
 function getCombinedMap(actions : TwoMapActionStreams) : MapAction<string,mixed> {
     const latestParent = actions[0];
