@@ -1,6 +1,6 @@
 //@flow
-import { map } from 'rxjs/operators';
-import { ObservableMap, MapAction } from "rxjs-observable-collections";
+import { map, filter } from 'rxjs/operators';
+import { ObservableMap, MapAction, MapDeleteAction, MapSetAction } from "rxjs-observable-collections";
 import { ModelContext } from './ModelContext';
 import { ChildModelContext } from './ChildModelContext';
 
@@ -24,6 +24,13 @@ export class RootModelContext implements ModelContext {
     get<T : mixed>(key : string) : rxjs$Observable<?T> {
         return this.#variables
             .actions
+            .pipe(filter(action => {
+                if (action instanceof MapDeleteAction)
+                    return action.key === key;
+                if (action instanceof MapSetAction)
+                    return action.key === key;
+                return true;
+            }))
             .pipe(map(action => {
                 const value = action.map.get(key);
                 return ((value : any) : ?T);
