@@ -114,6 +114,20 @@ describe('The ModelContext class', () => {
             sub.unsubscribe();
         });
 
+        it('should emit an ongoing stream of values from a child context', () => {
+            const fromSub : Array<number> = [];
+            const child = sut.createChild();
+            const sub = child.get<number>('key1')
+                .subscribe(val => fromSub.push(val));
+
+            sut.set('key1', 3);
+            child.set('key1', 4);
+            child.set('key1', 5);
+
+            expect(fromSub).toEqual([undefined, 3, 4, 5]);
+            sub.unsubscribe();
+        });
+
         it('should not emit values overridden in a parent context', () => {
             const fromSub : Array<number> = [];
             const child = sut.createChild();
@@ -127,7 +141,7 @@ describe('The ModelContext class', () => {
             sub.unsubscribe();
         });
 
-        xit('should not emit unnecesary values due to irrelevant changes in an overridden parent context', () => {
+        it('should not emit unnecesary values due to irrelevant changes in an overridden parent context', () => {
             const fromSub : Array<number> = [];
             const child = sut.createChild();
             const sub = child.get<number>('key1')
@@ -136,6 +150,47 @@ describe('The ModelContext class', () => {
             child.set('key1', 3);
             sut.set('key1', 4);
             sut.set('key1', 5);
+
+            expect(fromSub.length).toBe(2);
+            sub.unsubscribe();
+        });
+
+        it('should not emit unnecesary values due to irrelevant changes to another variable from the same child context', () => {
+            const fromSub : Array<number> = [];
+            const child = sut.createChild();
+            const sub = child.get<number>('key1')
+                .subscribe(val => fromSub.push(val));
+
+            child.set('key1', 3);
+            child.set('key2', 22);
+            child.set('key3', 24);
+
+            expect(fromSub.length).toBe(2);
+            sub.unsubscribe();
+        });
+
+        it('should not emit unnecesary values due to irrelevant changes to another variable from the same root context', () => {
+            const fromSub : Array<number> = [];
+            const sub = sut.get<number>('key1')
+                .subscribe(val => fromSub.push(val));
+
+            sut.set('key1', 3);
+            sut.set('key2', 22);
+            sut.set('key3', 24);
+
+            expect(fromSub.length).toBe(2);
+            sub.unsubscribe();
+        });
+
+        it('should not emit unnecesary values due to irrelevant changes to another variable in the parent context', () => {
+            const fromSub : Array<number> = [];
+            const child = sut.createChild();
+            const sub = child.get<number>('key1')
+                .subscribe(val => fromSub.push(val));
+
+            child.set('key1', 3);
+            sut.set('key2', 22);
+            sut.set('key3', 24);
 
             expect(fromSub.length).toBe(2);
             sub.unsubscribe();
@@ -187,7 +242,7 @@ describe('The ModelContext class', () => {
             sub.unsubscribe();
         });
 
-        xit('should not emit unnecesary values due to irrelevant changes in an overridden parent context', () => {
+        it('should not emit unnecesary values due to irrelevant changes in an overridden parent context', () => {
             const fromSub : Array<Map<string,number>> = [];
             const child = sut.createChild();
             const sub = child.getAll()
