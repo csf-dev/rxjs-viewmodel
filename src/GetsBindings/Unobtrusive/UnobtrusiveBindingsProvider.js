@@ -8,6 +8,23 @@ import getActivatorProvider, { GetsBindingActivator } from '../../GetsBindingAct
 import type { ActivatorIdentifier } from '../../GetsBindingActivator';
 import type { ElementBinding } from '../ElementBinding';
 
+export class UnobtrusiveBindingsProvider implements GetsElementBindings {
+    #definitions : Array<UnobtrusiveBindingDefinition>;
+    #activatorFactory : GetsBindingActivator;
+
+    getBindings(element : HTMLElement) : Promise<ElementBinding> {
+        const bindingDefs = getMatchingBindingDefinitions(this.#definitions, element);
+        const bindingPromises = bindingDefs.map(def => getBinding(def, this.#activatorFactory));
+        return Promise.all(bindingPromises)
+            .then(bindings => { return { element, bindings }; });
+    }
+
+    constructor(options : BindingOptions) {
+        this.#definitions = options.bindingDefinitions;
+        this.#activatorFactory = options.bindingActivatorProvider || getDefaultBindingActivatorProvider();
+    }
+}
+
 function getDefaultBindingActivatorProvider() { return getActivatorProvider(); }
 
 function reduceUnotrusiveDefinition(accumulator : Array<BindingDefinition<mixed>>,
@@ -36,21 +53,4 @@ function getBinding(def : BindingDefinition<mixed>,
                     activatorFactory : GetsBindingActivator) : Promise<BindingDeclaration<mixed>> {
     return getActivator(def.activator, activatorFactory)
         .then(activator => Promise.resolve(new BindingDeclaration(activator, def.paramsProvider)));
-}
-
-export class UnobtrusiveBindingsProvider implements GetsElementBindings {
-    #definitions : Array<UnobtrusiveBindingDefinition>;
-    #activatorFactory : GetsBindingActivator;
-
-    getBindings(element : HTMLElement) : Promise<ElementBinding> {
-        const bindingDefs = getMatchingBindingDefinitions(this.#definitions, element);
-        const bindingPromises = bindingDefs.map(def => getBinding(def, this.#activatorFactory));
-        return Promise.all(bindingPromises)
-            .then(bindings => { return { element, bindings }; });
-    }
-
-    constructor(definitions : Array<UnobtrusiveBindingDefinition>, options : BindingOptions) {
-        this.#definitions = definitions;
-        this.#activatorFactory = options.bindingActivatorProvider || getDefaultBindingActivatorProvider();
-    }
 }

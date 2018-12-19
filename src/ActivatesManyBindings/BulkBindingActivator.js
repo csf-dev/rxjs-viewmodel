@@ -18,3 +18,7 @@ export class BulkBindingActivator implements ActivatesManyBindings {
         });
     }
 }
+
+export default function getBulkBindingActivator() : ActivatesManyBindings {
+    return new BulkBindingActivator();
+}

@@ -5,3 +5,5 @@ import type { ActivatableBinding } from '../binding';
 export interface ActivatesManyBindings {
     activateAll(activatableBindings : Array<ActivatableBinding<mixed>>) : Array<Promise<LiveBinding<mixed>>>;
 }
+
+export { default as getBulkBindingActivator } from './BulkBindingActivator';

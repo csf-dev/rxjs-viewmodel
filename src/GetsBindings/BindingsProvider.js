@@ -2,9 +2,11 @@
 import { BindingDeclaration } from '../binding';
 import { GetsBindings } from '.';
 import { GetsElementBindings } from './GetsElementBindings';
-import { GetsAllHTMLElements } from './ElementProvider';
+import getElementProvider, { GetsAllHTMLElements } from './ElementProvider';
 import type { ElementBinding } from './ElementBinding';
 import type { ElementsWithBindingDeclarations} from '../binding'
+import BindingOptions from '../core/BindingOptions';
+import { UnobtrusiveBindingsProvider } from './Unobtrusive/UnobtrusiveBindingsProvider';
 
 export class BindingsProvider implements GetsBindings {
     #elementBindingsProvider : GetsElementBindings;
@@ -23,4 +25,10 @@ export class BindingsProvider implements GetsBindings {
         this.#elementBindingsProvider = elementBindingsProvider;
         this.#elementsProvider = elementsProvider;
     }
+}
+
+export default function getBindingsProvider(options : BindingOptions) : GetsBindings {
+    const elementsProvider = options.elementProvider || getElementProvider();
+    const elementBindingsProvider = options.elementBindingProvider || new UnobtrusiveBindingsProvider(options);
+    return new BindingsProvider(elementBindingsProvider, elementsProvider);
 }

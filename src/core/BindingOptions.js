@@ -1,46 +1,65 @@
 //@flow
 import { GetsBindings } from '../GetsBindings';
 import { GetsActivatableBindings } from '../GetsActivatableBindings';
-import { GetsBindingContext } from '../GetsActivatableBindings/GetsBindingContext'
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
+import { GetsAllHTMLElements } from '../GetsBindings/ElementProvider';
+import { GetsElementBindings } from '../GetsBindings/GetsElementBindings';
 import { GetsBindingActivator } from '../GetsBindingActivator';
+import type { UnobtrusiveBindingDefinition } from '../GetsBindings/Unobtrusive/UnobtrusiveBindingDefinition';
 
-export const bindingsProvder = 'bindingsProvider';
-export const bindingContextProvider = 'bindingContextProvider';
-export const activatableBindingsProvider = 'activatableBindingsProvider';
-export const bulkBindingActivator = 'bulkBindingActivator';
-export const bindingActivatorProvider = 'bindingActivatorProvider';
+const optionNames = {
+    bindingsProvider: 'bindingsProvider',
+    activatableBindingsProvider: 'activatableBindingsProvider',
+    bulkBindingActivator: 'bulkBindingActivator',
+    elementProvider: 'elementProvider',
+    elementBindingProvider: 'elementBindingProvider',
+    bindingActivatorProvider: 'bindingActivatorProvider',
+    bindingDefinitions: 'bindingDefinitions',
+};
+Object.freeze(optionNames);
+export { optionNames };
+
 
 export default class BindingOptions {
     #options : Map<string,mixed>;
 
     get bindingsProvider() : ?GetsBindings {
-        const output : any = this.#options.get(bindingsProvder);
-        return (output : GetsBindings) || null;
+        return (this.#options.get(optionNames.bindingsProvider) : any);
     }
-    get bindingContextProvider() : ?GetsBindingContext  {
-        const output : any = this.#options.get(bindingContextProvider);
-        return (output : GetsBindingContext) || null;
-    }
-    get bulkBindingActivator() : ?ActivatesManyBindings  {
-        const output : any = this.#options.get(bulkBindingActivator);
-        return (output : ActivatesManyBindings) || null;
-    }
+
     get activatableBindingsProvider() : ?GetsActivatableBindings {
-        const output : any = this.#options.get(activatableBindingsProvider);
-        return (output : GetsActivatableBindings) || null;
+        return (this.#options.get(optionNames.activatableBindingsProvider) : any);
+    }
+
+    get bulkBindingActivator() : ?ActivatesManyBindings  {
+        return (this.#options.get(optionNames.bulkBindingActivator) : any);
+    }
+    
+    get elementProvider() : ?GetsAllHTMLElements {
+        return (this.#options.get(optionNames.elementProvider) : any);
+    }
+    
+    get elementBindingProvider() : ?GetsElementBindings {
+        return (this.#options.get(optionNames.elementBindingProvider) : any);
     }
 
     get bindingActivatorProvider() : ?GetsBindingActivator {
-        const output : any = this.#options.get(bindingActivatorProvider);
-        return (output : GetsBindingActivator) || null;
+        return (this.#options.get(optionNames.bindingActivatorProvider) : any);
     }
 
-    get(key : string) : mixed { return this.#options.get(key); }
+    get bindingDefinitions() : Array<UnobtrusiveBindingDefinition> {
+        return (this.#options.get(optionNames.bindingDefinitions) : any) || [];
+    }
+
+    get<T>(key : string) : ?T { return (this.#options.get(key) : any); }
 
     constructor(source : {}) {
-        this.#options = new Map();
-        const keys : Array<string> = Object.getOwnPropertyNames(source);
-        keys.forEach(key => this.#options.set(key, source[key]));
+        this.#options = mapFromObject(source);
     }
+}
+
+function mapFromObject(source : {}) : Map<string,mixed> {
+    const keys : Array<string> = Object.getOwnPropertyNames(source);
+    const vals : Array<[string,mixed]> = keys.map(x => [x, source[x]]);
+    return new Map<string,mixed>(vals);
 }

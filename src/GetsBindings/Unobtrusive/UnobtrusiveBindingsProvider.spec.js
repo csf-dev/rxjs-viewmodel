@@ -26,8 +26,8 @@ describe('The unobtrusive bindings provider', () => {
 
         const allBindings = getUnobtrusiveBindings();
         activatorProvider = new DummyActivatorProvider();
-        const options = new BindingOptions({bindingActivatorProvider: activatorProvider});
-        sut = new UnobtrusiveBindingsProvider(allBindings, options);
+        const options = new BindingOptions({bindingActivatorProvider: activatorProvider, bindingDefinitions: allBindings});
+        sut = new UnobtrusiveBindingsProvider(options);
 
         spyOn(activatorProvider, 'getActivator').and.callFake(name => Promise.resolve({ name: name, activate: ctx => {} }));
     });

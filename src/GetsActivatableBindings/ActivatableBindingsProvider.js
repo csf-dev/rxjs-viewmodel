@@ -7,6 +7,7 @@ import type { ElementBinding } from '../GetsBindings';
 import BindingOptions from '../core/BindingOptions';
 import getModelContext, { ModelContext } from '../binding/ModelContext';
 import { ModelContextCache } from './ModelContextCache';
+import getBindingContextFactory from './BindingContextFactory';
 
 export class ActivatableBindingsProvider implements GetsActivatableBindings {
     #bindingContextFactory : GetsBindingContext;
@@ -23,9 +24,9 @@ export class ActivatableBindingsProvider implements GetsActivatableBindings {
     }
 }
 
-export default function getActivatableBindingsProvider(options : BindingOptions) {
-    if(!options.bindingContextProvider) throw new Error('Not implemented yet');
-    return new ActivatableBindingsProvider(options.bindingContextProvider);
+export default function getActivatableBindingsProvider() : GetsActivatableBindings {
+    const contextFactory = getBindingContextFactory();
+    return new ActivatableBindingsProvider(contextFactory);
 }
 
 function getBindingDeclarationReducer(contextFactory : GetsBindingContext, rootModelContext : ModelContext) {
