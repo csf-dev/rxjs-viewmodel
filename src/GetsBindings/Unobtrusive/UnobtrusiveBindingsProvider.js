@@ -11,7 +11,7 @@ import type { ElementBinding } from '../ElementBinding';
 function getDefaultBindingActivatorProvider() { return getActivatorProvider(); }
 
 function reduceUnotrusiveDefinition(accumulator : Array<BindingDefinition<mixed>>,
-                                    current : UnobtrusiveBindingDefinition<mixed>) : Array<BindingDefinition<mixed>> {
+                                    current : UnobtrusiveBindingDefinition) : Array<BindingDefinition<mixed>> {
     const bindings : Array<BindingDefinition<mixed>>
         = Array.isArray(current.bindings)? current.bindings : [current.bindings];
     
@@ -19,7 +19,7 @@ function reduceUnotrusiveDefinition(accumulator : Array<BindingDefinition<mixed>
     return accumulator;
 }
 
-function getMatchingBindingDefinitions(definitions : Array<UnobtrusiveBindingDefinition<mixed>>,
+function getMatchingBindingDefinitions(definitions : Array<UnobtrusiveBindingDefinition>,
                                        element : HTMLElement) : Array<BindingDefinition<mixed>> {
     return definitions
         .filter(def => element.matches(def.selector))
@@ -39,7 +39,7 @@ function getBinding(def : BindingDefinition<mixed>,
 }
 
 export class UnobtrusiveBindingsProvider implements GetsElementBindings {
-    #definitions : Array<UnobtrusiveBindingDefinition<mixed>>;
+    #definitions : Array<UnobtrusiveBindingDefinition>;
     #activatorFactory : GetsBindingActivator;
 
     getBindings(element : HTMLElement) : Promise<ElementBinding> {
@@ -49,7 +49,7 @@ export class UnobtrusiveBindingsProvider implements GetsElementBindings {
             .then(bindings => { return { element, bindings }; });
     }
 
-    constructor(definitions : Array<UnobtrusiveBindingDefinition<mixed>>, options : BindingOptions) {
+    constructor(definitions : Array<UnobtrusiveBindingDefinition>, options : BindingOptions) {
         this.#definitions = definitions;
         this.#activatorFactory = options.bindingActivatorProvider || getDefaultBindingActivatorProvider();
     }
