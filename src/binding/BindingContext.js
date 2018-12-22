@@ -11,7 +11,7 @@ export default class BindingContext<+TParams : mixed> {
 
     get dom() { return this.#dom; }
     get model() { return this.#model; }
-    get parameters() { return this.#parameters; }
+    get parameters() : TParams { return this.#parameters; }
     getAllBindings() : Array<BindingDeclaration<mixed>> {
         return this.#allBindings.slice();
     }

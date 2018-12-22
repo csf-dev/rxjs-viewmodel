@@ -1,17 +1,15 @@
 //@flow
 import { ActivatesAndDeactivatesBinding } from './ActivatesAndDeactivatesBinding';
 import { StatefulBinding } from './LiveBinding';
+import { DeactivatesBinding } from './DeactivatesBinding';
 
 export class LiveBindingActivatorDeactivator implements ActivatesAndDeactivatesBinding {
-    activate(binding : StatefulBinding<mixed>) {
-        return Promise.resolve(binding.activator.activate(binding.context))
-            .then(undef => Promise.resolve(true));
+    async activate(binding : StatefulBinding<mixed>) {
+        return await binding.activator.activate(binding.context);
     }
 
-    deactivate(binding : StatefulBinding<mixed>) {
-        if(!binding.activator.deactivate) return Promise.resolve(false);
-
-        return Promise.resolve(binding.activator.deactivate(binding.context))
-            .then(undef => Promise.resolve(true));
+    async deactivate(binding : StatefulBinding<mixed>, deactivator : DeactivatesBinding) {
+        const deactivated = await deactivator.deactivate();
+        return Promise.resolve();
     }
 }

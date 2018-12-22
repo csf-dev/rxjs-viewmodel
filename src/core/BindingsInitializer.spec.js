@@ -106,7 +106,7 @@ function getMockActivator(name : string) : BindingActivator<mixed> {
     return {
         name: name,
         activate: ctx => new Promise((res, rej) => {
-            setTimeout(() => { res(undefined); }, 25);
+            setTimeout(() => { res({deactivate: () => {}}); }, 25);
         })
     };
 }

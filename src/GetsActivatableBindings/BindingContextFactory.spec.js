@@ -67,7 +67,7 @@ function getElement() : HTMLElement { return document.createElement('div'); }
 function getActivator() : BindingActivator<number> {
     return {
         name: 'foo',
-        activate: function(ctx : BindingContext<number>) { return Promise.resolve(undefined); }
+        activate: function(ctx : BindingContext<number>) { return Promise.resolve({deactivate: () => {}}); }
     }
 }
 
