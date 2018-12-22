@@ -1,4 +1,3 @@
 //@flow
-export interface ProvidesValue<T> {
-    value : T;
-}
+
+export type ProvidesValue<T> = T | Promise<T> | rxjs$Observable<T>;

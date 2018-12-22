@@ -1,19 +1,20 @@
 //@flow
 import { ActivatesAndDeactivatesBinding } from './ActivatesAndDeactivatesBinding';
 import { StatefulBinding } from './LiveBinding';
+import { DeactivatesBinding } from './DeactivatesBinding';
 
 export class ElementAttachingActivatorDeactivatorDecorator implements ActivatesAndDeactivatesBinding {
     #wrapped : ActivatesAndDeactivatesBinding;
 
     async activate(binding : StatefulBinding<mixed>) {
         const wrappedResult = await this.#wrapped.activate(binding);
-        if(wrappedResult) attachToElement(binding);
-        return Promise.resolve(wrappedResult);
+        attachToElement(binding);
+        return wrappedResult;
     }
 
-    async deactivate(binding : StatefulBinding<mixed>) {
-        const wrappedResult = await this.#wrapped.deactivate(binding);
-        if(wrappedResult) detachFromElement(binding);
+    async deactivate(binding : StatefulBinding<mixed>, deactivator : DeactivatesBinding) {
+        const wrappedResult = await this.#wrapped.deactivate(binding, deactivator);
+        detachFromElement(binding);
         return Promise.resolve(wrappedResult);
     }
 

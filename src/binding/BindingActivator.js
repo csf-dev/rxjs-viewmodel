@@ -1,8 +1,8 @@
 //@flow
 import BindingContext from './BindingContext';
+import { DeactivatesBinding } from './DeactivatesBinding';
 
 export interface BindingActivator<+TParams : mixed> {
-    name : string;
-    activate : (ctx : BindingContext<TParams>) => ?Promise<void>;
-    deactivate? : (ctx : BindingContext<TParams>) => ?Promise<void>;
+    +name : string;
+    +activate : (ctx : BindingContext<TParams>) => ?Promise<DeactivatesBinding>;
 };

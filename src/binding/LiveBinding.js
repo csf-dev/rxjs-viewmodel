@@ -3,6 +3,7 @@ import BindingContext from './BindingContext';
 import { BindingActivator } from './BindingActivator';
 import activatorDeactivatorFactory from './ActivatesAndDeactivatesBinding';
 import { ActivatesAndDeactivatesBinding } from './ActivatesAndDeactivatesBinding';
+import { DeactivatesBinding } from './DeactivatesBinding';
 
 export interface StatefulBinding<+TParams : mixed> {
     +isActive : bool;
@@ -17,19 +18,22 @@ export default class LiveBinding<TParams : mixed> implements StatefulBinding<TPa
     #activator : BindingActivator<TParams>;
     #active : bool;
     #activatorDeactivator : ActivatesAndDeactivatesBinding;
+    #deactivationToken : ?DeactivatesBinding;
 
     get context() : BindingContext<TParams> { return this.#context; };
     get activator() : BindingActivator<TParams> { return this.#activator; };
     get isActive() { return this.#active; }
 
-    activate() : Promise<bool> {
+    async activate() : Promise<bool> {
         if(this.isActive) return Promise.resolve(false);
-        return this.#activatorDeactivator.activate((this : StatefulBinding<mixed>));
+        this.#deactivationToken = await this.#activatorDeactivator.activate((this : StatefulBinding<mixed>));
+        return Promise.resolve(true);
     }
 
-    deactivate() : Promise<bool> {
-        if(!this.isActive) return Promise.resolve(false);
-        return this.#activatorDeactivator.deactivate((this : StatefulBinding<mixed>));
+    async deactivate() : Promise<bool> {
+        if(!this.isActive || !this.#deactivationToken) return Promise.resolve(false);
+        const done = await this.#activatorDeactivator.deactivate((this : StatefulBinding<mixed>), this.#deactivationToken);
+        return Promise.resolve(true);
     }
 
     constructor(context : BindingContext<TParams>, activator : BindingActivator<TParams>) {
@@ -37,5 +41,6 @@ export default class LiveBinding<TParams : mixed> implements StatefulBinding<TPa
         this.#activator = activator;
         this.#active = false;
         this.#activatorDeactivator = activatorDeactivatorFactory();
+        this.#deactivationToken = null;
     }
 };
