@@ -7,7 +7,7 @@ import getModelContext, { ModelContext } from './ModelContext';
 import { ProvidesBindingDom } from '../rendering/BindingDom';
 
 describe('The BindingContext class', () => {
-    describe('the getAllActions function', () => {
+    describe('the getAllBindings function', () => {
         it('should not return the original array', () => {
             const actions = [ getASampleBinding() ];
             const sut = new BindingContext(getSampleDom(), getSampleModelContext(), 'Params', actions);
@@ -20,8 +20,9 @@ describe('The BindingContext class', () => {
         it('should not affect the original array if its return is manipulated', () => {
             const actions = [ getASampleBinding() ];
             const sut = new BindingContext(getSampleDom(), getSampleModelContext(), 'Params', actions);
-            const result1 = sut.getAllBindings();
-            result1.push(getASampleBinding('bar'));
+
+            const mutatedResult = sut.getAllBindings();
+            mutatedResult.push(getASampleBinding('bar'));
 
             const result = sut.getAllBindings();
 
