@@ -52,6 +52,7 @@
   ],
   "dependencies": {
     "rxjs": "^6.3.3",
+    "dom-task-scheduler": "^0.2.0",
     "rxjs-observable-collections": "^1.0.0"
   },
   "peerDependencies": {
