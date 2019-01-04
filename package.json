@@ -53,10 +53,9 @@
   "dependencies": {
     "rxjs": "^6.3.3",
     "dom-task-scheduler": "^0.2.0",
-    "rxjs-observable-collections": "^1.0.0"
-  },
-  "peerDependencies": {
-    "core-js": "^2.6.0",
-    "@babel/polyfill": "^7.0.0"
+    "rxjs-observable-collections": "^1.0.1",
+    "@babel/polyfill": "^7.0.0",
+    "core-js": "^2.6.1",
+    "regenerator-runtime": "0.12.0"
   }
 }
