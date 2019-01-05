@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "npx karma start",
-    "tests": "npx karma start --no-single-run"
+    "tests": "npx karma start --no-single-run",
+    "prepack": "node tools/prepack.js"
   },
   "repository": {
     "type": "git",

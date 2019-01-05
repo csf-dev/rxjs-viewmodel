@@ -1,0 +1,11 @@
+flow-typed/**/*
+src/**/*
+tools/**/*
+.babelrc
+.flowconfig
+.travis.yml
+*.code-workspace
+karma.conf.js
+*.tgz
+webpack.config.js
+.directory
