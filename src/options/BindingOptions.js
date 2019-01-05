@@ -7,6 +7,7 @@ import { GetsAllHTMLElements } from '../GetsBindings/ElementProvider';
 import { GetsElementBindings } from '../GetsBindings/GetsElementBindings';
 import { GetsBindingActivator } from '../GetsBindingActivator';
 import type { UnobtrusiveBindingDefinition } from '../GetsBindings/Unobtrusive/UnobtrusiveBindingDefinition';
+import { SchedulesDomTasks } from 'dom-task-scheduler';
 
 export type BindingOptions = {
     bindingsProvider : GetsBindings;
@@ -16,6 +17,7 @@ export type BindingOptions = {
     elementBindingProvider : GetsElementBindings;
     bindingActivatorProvider : GetsBindingActivator;
     bindingDefinitions : Array<UnobtrusiveBindingDefinition>;
+    domScheduler : SchedulesDomTasks;
 }
 
 export type MaybeBindingOptions = {
@@ -26,4 +28,5 @@ export type MaybeBindingOptions = {
     elementBindingProvider? : GetsElementBindings;
     bindingActivatorProvider? : GetsBindingActivator;
     bindingDefinitions? : Array<UnobtrusiveBindingDefinition>;
+    domScheduler? : SchedulesDomTasks;
 }

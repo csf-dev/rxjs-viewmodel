@@ -5,14 +5,12 @@ import { ClassBindingActivator } from '../bindingActivators/ClassBindingActivato
 import type { UnobtrusiveBindingDefinition } from '../GetsBindings/Unobtrusive'
 import { BehaviorSubject } from 'rxjs';
 import applyBindings from '../core';
+import { getTaskScheduler } from 'dom-task-scheduler';
 
 describe('A simple binding scenario with a single element', () => {
     it('should update the DOM as expected for a text binding', async () => {
 
-        const options = {
-            bindingDefinitions: getBindingDefinitions(),
-            bindingActivatorProvider: getBindingActivatorRegistry()
-        };
+        const options = getOptions();
 
         const vm = new MyViewModel('that');
 
@@ -21,22 +19,19 @@ describe('A simple binding scenario with a single element', () => {
         const body = doc.querySelectorAll('body')[0];
 
         body.innerHTML = `<p>Hello, this is <span class="textBoundElement">my</span> document</p>`;
-        applyBindings(body, vm, options);
+        await applyBindings(body, vm, options);
 
-        await briefWait();
+        await options.domScheduler.tasksComplete;
         expect(body.innerHTML).toEqual(`<p>Hello, this is <span class="textBoundElement">that</span> document</p>`);
 
         vm.newVal('a very special');
-        await briefWait();
+        await options.domScheduler.tasksComplete;
         expect(body.innerHTML).toEqual(`<p>Hello, this is <span class="textBoundElement">a very special</span> document</p>`);
     });
 
     it('should update the DOM as expected for a class binding', async () => {
 
-        const options = {
-            bindingDefinitions: getBindingDefinitions(),
-            bindingActivatorProvider: getBindingActivatorRegistry()
-        };
+        const options = getOptions();
 
         const vm = new MyViewModel('classOne');
 
@@ -45,16 +40,24 @@ describe('A simple binding scenario with a single element', () => {
         const body = doc.querySelectorAll('body')[0];
 
         body.innerHTML = `<p>Hello, this is <span class="classBoundElement">my</span> document</p>`;
-        applyBindings(body, vm, options);
+        await applyBindings(body, vm, options);
 
-        await briefWait();
+        await options.domScheduler.tasksComplete;
         expect(body.innerHTML).toEqual(`<p>Hello, this is <span class="classOne">my</span> document</p>`);
 
         vm.newVal('classTwo classThree');
-        await briefWait();
+        await options.domScheduler.tasksComplete;
         expect(body.innerHTML).toEqual(`<p>Hello, this is <span class="classTwo classThree">my</span> document</p>`);
     });
 });
+
+function getOptions() {
+    return {
+        bindingDefinitions: getBindingDefinitions(),
+        bindingActivatorProvider: getBindingActivatorRegistry(),
+        domScheduler: getTaskScheduler()
+    };
+}
 
 function getBindingActivatorRegistry() {
     const activatorRegistry = new ActivatorRegistry();
@@ -80,13 +83,6 @@ function getBindingDefinitions() : Array<UnobtrusiveBindingDefinition> {
             }
         }
     ];
-}
-
-function briefWait() : Promise<void> {
-    var promise = new Promise((res, rej) => {
-        setTimeout(() => res(), 50);
-    });
-    return promise;
 }
 
 class MyViewModel {

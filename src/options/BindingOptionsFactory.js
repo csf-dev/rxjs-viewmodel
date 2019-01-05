@@ -8,6 +8,7 @@ import getElementProvider from '../GetsBindings/ElementProvider';
 import { UnobtrusiveBindingsProvider } from '../GetsBindings/Unobtrusive';
 import getActivatorProvider, { GetsBindingActivator } from '../GetsBindingActivator';
 import type { UnobtrusiveBindingDefinition } from '../GetsBindings/Unobtrusive/UnobtrusiveBindingDefinition';
+import { getTaskScheduler } from 'dom-task-scheduler';
 
 function getDefaultOptions(opts : MaybeBindingOptions) : BindingOptions {
     const elementProvider = opts.elementProvider || getElementProvider();
@@ -24,6 +25,7 @@ function getDefaultOptions(opts : MaybeBindingOptions) : BindingOptions {
         elementBindingProvider: elementBindingsProvider,
         bindingActivatorProvider: activator,
         bindingDefinitions: bindingDefinitions,
+        domScheduler: opts.domScheduler || getTaskScheduler()
     };
 }
 

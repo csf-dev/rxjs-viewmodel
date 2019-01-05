@@ -9,7 +9,7 @@ export class ClassBindingActivator implements BindingActivator<ProvidesValue<str
 
     activate(ctx : BindingContext<ProvidesValue<string>>) : ?Promise<DeactivatesBinding> {
         const observable = getObservableValue(ctx.parameters);
-        const sub = observable.subscribe(val => ctx.dom.element.className = val);
+        const sub = observable.subscribe(val => ctx.scheduleDomTask(() => ctx.dom.element.className = val));
 
         const deactivator : DeactivatesBinding = {
             deactivate: () => {

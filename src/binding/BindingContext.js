@@ -17,7 +17,10 @@ export default class BindingContext<+TParams : mixed> {
     getAllBindings() : Array<BindingDeclaration<mixed>> {
         return this.#allBindings.slice();
     }
-    get options() { return this.#options; }
+    get options() : BindingOptions { return this.#options; }
+    scheduleDomTask(task : () => ?Promise<void>) : void {
+        this.options.domScheduler.addTask(task);
+    }
 
     constructor(dom : ProvidesBindingDom,
                 model : ModelContext,
