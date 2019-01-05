@@ -54,7 +54,7 @@ describe('The bindings initializer', () => {
 
         await sut.initialize(vm);
 
-        expect(activatableBindingsProvider.getActivatableBindings).toHaveBeenCalledWith(sourceBindings, vm);
+        expect(activatableBindingsProvider.getActivatableBindings).toHaveBeenCalledWith(sourceBindings, vm, jasmine.anything());
     });
 
     it('should activate all of the contextualized bindings', async function() {

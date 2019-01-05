@@ -11,9 +11,16 @@ export default class BindingsInitializer {
     #element : HTMLElement;
 
     async initialize(viewModel : mixed) : Promise<LiveBindingsCollection> {
-        const bindings = await this.#options.bindingsProvider.getBindings(this.#element);
-        const activatableBindings = await this.#options.activatableBindingsProvider.getActivatableBindings(bindings, viewModel);
-        const activationPromises = this.#options.bulkBindingActivator.activateAll(activatableBindings);
+        const bindingsProvider = this.#options.bindingsProvider;
+        const activatableBindingsProvider = this.#options.activatableBindingsProvider;
+        const bulkActivator = this.#options.bulkBindingActivator;
+
+        const bindings = await bindingsProvider.getBindings(this.#element);
+        const activatableBindings = await activatableBindingsProvider.getActivatableBindings(bindings,
+                                                                                             viewModel,
+                                                                                             this.#options);
+        const activationPromises = bulkActivator.activateAll(activatableBindings);
+        
         const activationsCompleted = await Promise.all(activationPromises);
 
         return new LiveBindingsCollection(activationsCompleted);

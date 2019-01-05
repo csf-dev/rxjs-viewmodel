@@ -6,8 +6,12 @@ import { BindingDeclaration, BindingContext } from '../binding';
 import { BindingActivator } from '../binding/BindingActivator';
 import type { ActivatableBinding } from '../binding';
 import { ModelContext } from '../binding/ModelContext';
+import { BindingOptionsFactory } from '../options/BindingOptionsFactory';
 
 describe('The activatable bindings provider', () => {
+    const optionsFactory = new BindingOptionsFactory();
+    const options = optionsFactory.getOptions();
+
     it('should return an array of activatable bindings pointing to the correct source bindings, across multiple elements', async () => {
         const bindingContextFactory = getMockBindingContextFactory();
         spyOn(bindingContextFactory, 'getContext').and.returnValue(Promise.resolve(null));
@@ -25,7 +29,7 @@ describe('The activatable bindings provider', () => {
 
         const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
-        const result = await sut.getActivatableBindings(elementsAndBindings, {});
+        const result = await sut.getActivatableBindings(elementsAndBindings, {}, options);
 
         expect(result.map(item => item.binding)).toEqual([element1Binding1, element2Binding1, element2Binding2]);
     });
@@ -45,7 +49,7 @@ describe('The activatable bindings provider', () => {
 
         const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
-        const result = await sut.getActivatableBindings(elementsAndBindings, {});
+        const result = await sut.getActivatableBindings(elementsAndBindings, {}, options);
 
         const models : Array<ModelContext> = result.map(item => (item.context : any).model);
 
@@ -87,7 +91,7 @@ describe('The activatable bindings provider', () => {
 
         const sut = new ActivatableBindingsProvider(bindingContextFactory);
 
-        const result = await sut.getActivatableBindings(elementsAndBindings, {});
+        const result = await sut.getActivatableBindings(elementsAndBindings, {}, options);
 
         expect(result.map(item => item.context)).toEqual([context1, context2, context3]);
     });

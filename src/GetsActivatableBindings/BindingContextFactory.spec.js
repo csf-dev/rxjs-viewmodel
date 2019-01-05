@@ -4,10 +4,13 @@ import { GetsBindingContext } from './GetsBindingContext';
 import { BindingDeclaration, BindingContext } from '../binding';
 import { BindingActivator } from '../binding/BindingActivator';
 import getModelContext, { ModelContext } from '../binding/ModelContext';
+import { BindingOptionsFactory } from '../options/BindingOptionsFactory';
 
 describe('The binding context factory.', () => {
     let model : ModelContext;
     const sut : GetsBindingContext = new BindingContextFactory();
+    const optionsFactory = new BindingOptionsFactory();
+    const options = optionsFactory.getOptions();
 
     beforeEach(() => {
         model = getModelContext({ myNumber: 4 });
@@ -17,7 +20,8 @@ describe('The binding context factory.', () => {
         const result = await sut.getContext(getElement(),
                                             getBinding(ctx => ctx.getVm<{myNumber:number}>().myNumber),
                                             [],
-                                            model);
+                                            model,
+                                            options);
 
         expect(result instanceof BindingContext).toBe(true);
     });
@@ -26,7 +30,8 @@ describe('The binding context factory.', () => {
         const result = await sut.getContext(getElement(),
                                             getBinding(ctx => ctx.getVm<{myNumber:number}>().myNumber + 1),
                                             [],
-                                            model);
+                                            model,
+                                            options);
 
         expect(result.parameters).toEqual(5);
     });
@@ -36,7 +41,8 @@ describe('The binding context factory.', () => {
         const result = await sut.getContext(getElement(),
                                             getBinding(ctx => ctx.getOnce('num') || 0),
                                             [],
-                                            model);
+                                            model,
+                                            options);
 
         expect(result.parameters).toEqual(22);
     });
@@ -46,7 +52,8 @@ describe('The binding context factory.', () => {
         const result = await sut.getContext(getElement(),
                                             getBinding(ctx => { throw new Error('Test error') }),
                                             [],
-                                            model);
+                                            model,
+                                            options);
 
         expect(result.parameters).toBeUndefined();
     });
@@ -57,7 +64,8 @@ describe('The binding context factory.', () => {
         const result = await sut.getContext(getElement(),
                                             getBinding(ctx => ctx.getOnce('num') || 0),
                                             allBindings,
-                                            model);
+                                            model,
+                                            options);
 
         expect(result.getAllBindings()).toEqual(allBindings);
     });

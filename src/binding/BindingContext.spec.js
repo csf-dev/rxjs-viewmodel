@@ -5,12 +5,16 @@ import BindingDeclaration from './BindingDeclaration';
 import { BindingActivator } from './BindingActivator';
 import getModelContext, { ModelContext } from './ModelContext';
 import { ProvidesBindingDom } from '../rendering/BindingDom';
+import { BindingOptionsFactory } from '../options/BindingOptionsFactory';
 
 describe('The BindingContext class', () => {
+    const optionsFactory = new BindingOptionsFactory();
+    const options = optionsFactory.getOptions();
+
     describe('the getAllBindings function', () => {
         it('should not return the original array', () => {
             const actions = [ getASampleBinding() ];
-            const sut = new BindingContext(getSampleDom(), getSampleModelContext(), 'Params', actions);
+            const sut = new BindingContext(getSampleDom(), getSampleModelContext(), 'Params', actions, options);
 
             const result = sut.getAllBindings();
 
@@ -19,7 +23,7 @@ describe('The BindingContext class', () => {
 
         it('should not affect the original array if its return is manipulated', () => {
             const actions = [ getASampleBinding() ];
-            const sut = new BindingContext(getSampleDom(), getSampleModelContext(), 'Params', actions);
+            const sut = new BindingContext(getSampleDom(), getSampleModelContext(), 'Params', actions, options);
 
             const mutatedResult = sut.getAllBindings();
             mutatedResult.push(getASampleBinding('bar'));
