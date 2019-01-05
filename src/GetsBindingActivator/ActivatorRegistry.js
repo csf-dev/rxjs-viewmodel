@@ -1,5 +1,5 @@
 //@flow
-import type { BindingActivator } from '../binding';
+import { BindingActivator } from '../binding/BindingActivator';
 import type { ActivatorIdentifier } from './ActivatorIdentifier';
 import { GetsBindingActivator } from '.';
 
@@ -62,4 +62,4 @@ export class ActivatorRegistry implements RegistersBindingActivators, GetsBindin
 
 const singleton : RegistersBindingActivators & GetsBindingActivator = new ActivatorRegistry();
 
-export default singleton;
+export default function getActivatorProvider() { return singleton; }

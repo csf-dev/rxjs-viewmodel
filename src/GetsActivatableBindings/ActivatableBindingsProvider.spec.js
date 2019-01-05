@@ -2,7 +2,8 @@
 import { GetsActivatableBindings } from '.';
 import { GetsBindingContext } from './GetsBindingContext';
 import { ActivatableBindingsProvider } from './ActivatableBindingsProvider';
-import { BindingActivator, BindingDeclaration, BindingContext } from '../binding';
+import { BindingDeclaration, BindingContext } from '../binding';
+import { BindingActivator } from '../binding/BindingActivator';
 import type { ActivatableBinding } from '../binding';
 import { ModelContext } from '../binding/ModelContext';
 

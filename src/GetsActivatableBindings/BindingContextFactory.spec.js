@@ -1,7 +1,8 @@
 //@flow
 import { BindingContextFactory } from './BindingContextFactory';
 import { GetsBindingContext } from './GetsBindingContext';
-import { BindingDeclaration, BindingContext, BindingActivator } from '../binding';
+import { BindingDeclaration, BindingContext } from '../binding';
+import { BindingActivator } from '../binding/BindingActivator';
 import getModelContext, { ModelContext } from '../binding/ModelContext';
 
 describe('The binding context factory.', () => {

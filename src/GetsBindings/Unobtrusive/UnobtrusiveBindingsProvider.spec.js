@@ -4,7 +4,7 @@ import { BindingActivator } from '../../binding/BindingActivator';
 import type { UnobtrusiveBindingDefinition } from './UnobtrusiveBindingDefinition';
 import type { BindingDefinition } from '../BindingDefinition';
 import { GetsElementBindings } from '../GetsElementBindings';
-import { BindingOptions } from '../../core';
+import type { BindingOptions } from '../../options';
 import { UnobtrusiveBindingsProvider } from './UnobtrusiveBindingsProvider';
 
 describe('The unobtrusive bindings provider', () => {
@@ -26,8 +26,7 @@ describe('The unobtrusive bindings provider', () => {
 
         const allBindings = getUnobtrusiveBindings();
         activatorProvider = new DummyActivatorProvider();
-        const options = new BindingOptions({bindingActivatorProvider: activatorProvider, bindingDefinitions: allBindings});
-        sut = new UnobtrusiveBindingsProvider(options);
+        sut = new UnobtrusiveBindingsProvider(allBindings, activatorProvider);
 
         spyOn(activatorProvider, 'getActivator').and.callFake(name => Promise.resolve({ name: name, activate: ctx => {} }));
     });

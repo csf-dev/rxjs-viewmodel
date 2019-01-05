@@ -1,6 +1,7 @@
 //@flow
 import { ActivatorRegistry } from './ActivatorRegistry';
-import { BindingActivator, BindingContext } from '../binding';
+import { BindingContext } from '../binding';
+import { BindingActivator } from '../binding/BindingActivator';
 
 describe('The activator registry', () => {
     it('should be able to add an activator', async () => {

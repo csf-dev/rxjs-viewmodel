@@ -4,9 +4,12 @@ import { GetsActivatableBindings } from '../GetsActivatableBindings';
 import { GetsBindingContext } from '../GetsActivatableBindings/GetsBindingContext';
 import { ActivatesManyBindings } from '../ActivatesManyBindings';
 import type { ActivatableBinding, ElementsWithBindingDeclarations } from '../binding';
-import { LiveBinding, BindingDeclaration, BindingContext, BindingActivator } from '../binding';
+import { LiveBinding, BindingDeclaration, BindingContext } from '../binding';
+import { BindingActivator } from '../binding/BindingActivator';
 import { getDom } from '../rendering';
 import BindingsInitializer from './BindingsInitializer';
+import { BindingOptionsFactory } from '../options/BindingOptionsFactory';
+import type { MaybeBindingOptions } from '../options';
 
 describe('The bindings initializer', () => {
     let
@@ -14,7 +17,7 @@ describe('The bindings initializer', () => {
         bindingsProvider : GetsBindings,
         activatableBindingsProvider : GetsActivatableBindings,
         bulkActivator : ActivatesManyBindings;
-
+    const optionsFactory = new BindingOptionsFactory();
 
     beforeEach(function() {
         element = document.createElement('div');
@@ -24,11 +27,12 @@ describe('The bindings initializer', () => {
     });
 
     function getSut() {
-        return new BindingsInitializer(element, {
+        const options : MaybeBindingOptions = {
             bindingsProvider: bindingsProvider,
             activatableBindingsProvider: activatableBindingsProvider,
             bulkBindingActivator: bulkActivator
-        });
+        };
+        return new BindingsInitializer(element, options, optionsFactory);
     }
 
     it('should pass the root element to the bindings provider as a parameter', function() {

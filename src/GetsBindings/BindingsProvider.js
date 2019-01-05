@@ -5,7 +5,7 @@ import { GetsElementBindings } from './GetsElementBindings';
 import getElementProvider, { GetsAllHTMLElements } from './ElementProvider';
 import type { ElementBinding } from './ElementBinding';
 import type { ElementsWithBindingDeclarations} from '../binding'
-import BindingOptions from '../core/BindingOptions';
+import type { BindingOptions } from '../options';
 import { UnobtrusiveBindingsProvider } from './Unobtrusive/UnobtrusiveBindingsProvider';
 
 export class BindingsProvider implements GetsBindings {
@@ -27,8 +27,7 @@ export class BindingsProvider implements GetsBindings {
     }
 }
 
-export default function getBindingsProvider(options : BindingOptions) : GetsBindings {
-    const elementsProvider = options.elementProvider || getElementProvider();
-    const elementBindingsProvider = options.elementBindingProvider || new UnobtrusiveBindingsProvider(options);
+export default function getBindingsProvider(elementBindingsProvider : GetsElementBindings,
+                                            elementsProvider : GetsAllHTMLElements) : GetsBindings {
     return new BindingsProvider(elementBindingsProvider, elementsProvider);
 }

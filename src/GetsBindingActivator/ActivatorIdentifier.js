@@ -1,4 +1,4 @@
 //@flow
-import type { BindingActivator } from '../binding';
+import { BindingActivator } from '../binding/BindingActivator';
 
 export type ActivatorIdentifier<+TParams : mixed> = string | BindingActivator<TParams>;

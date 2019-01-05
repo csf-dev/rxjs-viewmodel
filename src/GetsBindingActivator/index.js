@@ -1,15 +1,13 @@
 //@flow
 import registry from './ActivatorRegistry';
-import type { BindingActivator } from '../binding';
+import { BindingActivator } from '../binding/BindingActivator';
 import type { ActivatorIdentifier } from './ActivatorIdentifier';
 
 export interface GetsBindingActivator {
     getActivator(name : string) : Promise<BindingActivator<mixed>>;
 }
 
-export { default as activators } from './ActivatorRegistry';
+export { default } from './ActivatorRegistry';
 
 export type { ActivatorIdentifier } from './ActivatorIdentifier';
 export { ActivatorRegistry } from './ActivatorRegistry';
-
-export default function getActivatorProvider() : GetsBindingActivator { return registry; }

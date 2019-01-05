@@ -2,9 +2,10 @@
 import { GetsElementBindings } from '../GetsElementBindings';
 import type { UnobtrusiveBindingDefinition } from './UnobtrusiveBindingDefinition';
 import type { BindingDefinition } from '../BindingDefinition';
-import { BindingOptions } from '../../core';
-import { BindingDeclaration, BindingActivator } from '../../binding';
-import getActivatorProvider, { GetsBindingActivator } from '../../GetsBindingActivator';
+import type { BindingOptions } from '../../options';
+import { BindingDeclaration } from '../../binding';
+import { BindingActivator } from '../../binding/BindingActivator';
+import { GetsBindingActivator } from '../../GetsBindingActivator';
 import type { ActivatorIdentifier } from '../../GetsBindingActivator';
 import type { ElementBinding } from '../ElementBinding';
 
@@ -19,13 +20,11 @@ export class UnobtrusiveBindingsProvider implements GetsElementBindings {
             .then(bindings => { return { element, bindings }; });
     }
 
-    constructor(options : BindingOptions) {
-        this.#definitions = options.bindingDefinitions;
-        this.#activatorFactory = options.bindingActivatorProvider || getDefaultBindingActivatorProvider();
+    constructor(definitions : Array<UnobtrusiveBindingDefinition>, activatorFactory : GetsBindingActivator) {
+        this.#definitions = definitions;
+        this.#activatorFactory = activatorFactory;
     }
 }
-
-function getDefaultBindingActivatorProvider() { return getActivatorProvider(); }
 
 function reduceUnotrusiveDefinition(accumulator : Array<BindingDefinition<mixed>>,
                                     current : UnobtrusiveBindingDefinition) : Array<BindingDefinition<mixed>> {

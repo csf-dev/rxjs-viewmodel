@@ -1,5 +1,6 @@
 //@flow
-import { BindingActivator, BindingContext, DeactivatesBinding } from '../binding';
+import { BindingContext, DeactivatesBinding } from '../binding';
+import { BindingActivator } from '../binding/BindingActivator';
 import type { ProvidesValue } from '../vm';
 import { getObservableValue } from '../vm';
 

@@ -4,7 +4,6 @@ import { GetsBindingContext } from './GetsBindingContext';
 import { BindingDeclaration, BindingContext } from '../binding';
 import type { ActivatableBinding, ElementsWithBindingDeclarations } from '../binding';
 import type { ElementBinding } from '../GetsBindings';
-import BindingOptions from '../core/BindingOptions';
 import getModelContext, { ModelContext } from '../binding/ModelContext';
 import { ModelContextCache } from './ModelContextCache';
 import getBindingContextFactory from './BindingContextFactory';
